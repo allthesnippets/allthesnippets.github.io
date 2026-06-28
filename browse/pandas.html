@@ -1,0 +1,505 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta content="Comprehensive collection of python pandas snippets and cheat sheets for processing and analyzing data." name="description" />
+<meta content="pandas, python, snippets, cheat sheets, DataFrame, Series" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pandas Snippets And Cheat Sheets Collection For Data Science</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/snippets-style.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Basics" href="pandas/df_basics.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="index.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+Share: <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Pandas%20Snippets%20And%20Cheat%20Sheets%20Collection%20For%20Data%20Science%20https%3A%2F%2Fallthesnippets.com%2Fbrowse%2Findex.html"
+target="_blank">
+	<span class="fa fa-twitter-square fa-2x"></span>
+</a>
+
+ <a href="http://www.facebook.com/sharer.php?u=https://allthesnippets.com/browse/index.html" target="_blank" title="Facebook">
+ 	<span class="fa fa-facebook-square fa-2x"></span>
+ </a>
+
+<a href="http://www.linkedin.com/shareArticle?mini=true&url=https://allthesnippets.com/browse/index.html" target="_blank" title="Likedin">
+	<span class="fa fa-linkedin-square fa-2x"></span>
+</a>
+
+<a href="mailto:?subject=pandas%20cheat%20sheets&body=Pandas%20Snippets%20And%20Cheat%20Sheets%20Collection%20For%20Data%20Science%20https%3A%2F%2Fallthesnippets.com%2Fbrowse%2Findex.html" title="Share by Email" target=_blank>
+    <span class="fa fa-2x fa-envelope-square"></span>
+</a>
+
+<br />
+<a href="http://www.allthesnippets.com" class="icon icon-home">&nbsp;All-The-Snippets Home</a>
+<br />
+
+
+          
+            <a href="index.html" class="icon icon-home"> Browse Snippets
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">All The Snippets:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Pandas snippets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_axis.html">Axis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html">Examine Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html">Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html">Tidy Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_summarize.html">Summarize Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html">Select Data With .loc &amp; .iloc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html">Reshape Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_grouping.html">Group Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_timeseries.html">Time Series Data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python snippets</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Browse Snippets</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Pandas Snippets And Cheat Sheets Collection For Data Science</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/pandas.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div style="margin: auto; text-align: center;">
+  <a class="gumroad-button" href="https://gumroad.com/l/allthesnippets">Get Pandas Snippets and Cheats Collection eBook</a>
+</div><div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="pandas-snippets">
+<h1>Pandas snippets</h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pandas/df_basics.html">Basics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#import-the-pandas-library-and-aliasing-as-pd">Import the pandas library and aliasing as pd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#create-an-empty-dataframe">Create an empty DataFrame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#create-a-dataframe-from-list-of-lists-specify-values-for-each-row">Create a DataFrame from List of Lists. Specify values for each row</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#create-a-dataframe-from-a-dictionary-of-lists-specify-values-for-each-column">Create a DataFrame from a Dictionary of Lists. Specify values for each column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#create-a-dataframe-with-index">Create a DataFrame with index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#generate-a-random-dataframe">Generate a random DataFrame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#generate-a-random-dataframe-with-date-index">Generate a random DataFrame with date index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#set-a-column-as-the-dataframe-index">Set a column as the dataframe index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#reset-the-dataframe-index-to-the-default-integer-index">Reset the dataframe index to the default integer index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#reset-the-dataframe-index-without-inserting-it-into-dataframe-columns">Reset the dataframe index without inserting it into dataframe columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#rename-several-dataframe-columns">Rename several DataFrame columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#replace-all-column-names">Replace all column names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#lowercase-dataframe-columns-names">Lowercase DataFrame columns names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#remove-drop-one-column">Remove/drop one column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#remove-drop-several-columns">Remove/drop several columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#remove-drop-rows-by-index">Remove/drop rows by index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#remove-drop-first-two-rows">Remove/drop first two rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#remove-drop-last-two-rows">Remove/drop last two rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#remove-drop-rows-by-names">Remove/drop rows by names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#add-column-with-all-values-a-constant">Add column with all values a constant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#add-column-on-specific-position-as-second-column">Add column on specific position (as second column)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#add-column-based-on-values-of-other-columns">Add column based on values of other columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#add-column-with-values-from-list">Add column with values from list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#add-new-column-based-on-values-of-other-column-and-where-condition">Add new column based on values of other column and where condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#add-new-column-based-on-values-of-other-columns-and-where-condition">Add new column based on values of other columns and where condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#flatten-collapse-the-hierarchical-index-in-columns">Flatten/collapse the hierarchical index in columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_basics.html#iterate-over-dataframe-rows-slow-operation">Iterate over DataFrame rows (slow operation)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pandas/df_axis.html">Axis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_axis.html#axis-visualization">Axis Visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pandas/df_examine.html">Examine Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#show-the-first-30-and-last-30-rows">Show the first 30 and last 30 rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#show-info-on-index-data-types-memory-usage">Show info on index, data types, memory usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#show-type-of-df-object">Show type of df object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#show-the-first-5-rows">Show the first 5 rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#show-the-first-10-rows">Show the first 10 rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#show-the-last-5-rows">Show the last 5 rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#show-the-index-aka-the-labels">Show “the index” (aka “the labels”)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#show-the-column-names">Show the column names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#show-data-types-of-each-column">Show data types of each column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#show-number-of-rows-and-columns">Show number of rows and columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#show-number-of-rows-only">Show number of rows only</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#show-number-of-columns-only">Show number of columns only</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#get-dataframe-values-as-numpy-array">Get DataFrame values as numpy array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#show-info-on-rows-and-columns-indexes">Show info on rows and columns indexes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#get-a-concise-summary-of-a-dataframe">Get a concise summary of a DataFrame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#get-memory-usage-by-column">Get memory usage by column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#set-maximum-number-of-rows-and-columns-printed-to-unlimited">Set maximum number of rows and columns printed to unlimited</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#reset-maximum-number-of-rows-and-columns-printed-to-default">Reset maximum number of rows and columns printed to default</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#suppress-scientific-notation">Suppress scientific notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#reset-floats-display">Reset floats display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#change-float-format-to-two-decimal-places">Change float format to two decimal places</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#set-maximum-number-of-rows-and-columns-printed-to-unlimited-temporary">Set maximum number of rows and columns printed to unlimited temporary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#sort-dataframe-by-one-column-values-ascending">Sort dataframe by one column values ascending</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#sort-the-dataframe-by-one-column-values-descending">Sort the dataframe by one column values descending</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#sort-the-dataframe-by-one-column-values-ascending-inplace">Sort the dataframe by one column values ascending, inplace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#sort-the-dataframe-by-multiple-columns-values">Sort the dataframe by multiple columns values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#sort-the-dataframe-based-on-the-index-labels-ascending">Sort the dataframe based on the index labels ascending</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#sort-the-dataframe-based-on-the-columns-labels-ascending">Sort the dataframe based on the columns labels ascending</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_examine.html#id1">Sort the dataframe based on the columns labels ascending</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pandas/df_files.html">Files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#file-formats-that-can-be-read-in-write-to">File formats that can be read in/write to</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#read-csv-file">Read csv file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#read-csv-file-with-as-fields-separator">Read csv file with | as fields separator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#read-only-10-rows-of-csv-file">Read only 10 rows of csv file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#read-csv-file-and-skip-first-3-rows">Read csv file and skip first 3 rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#read-csv-file-and-parse-treat-columns-as-dates">Read csv file and parse/treat columns as dates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#read-csv-file-while-specifying-column-names">Read csv file while specifying column names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#read-csv-file-and-set-the-index-as-column-id">Read csv file and set the index as column_id</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#read-csv-file-and-set-the-index-as-multi-columns">Read csv file and set the index as multi columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#read-csv-file-and-set-as-missing-values">Read csv file and set “.” as missing values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#read-csv-file-and-set-different-missing-values-on-columns">Read csv file and set different missing values on columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#read-csv-file-and-prevent-pandas-from-interpreting-na-as-nan-in-a-string">Read csv file and prevent pandas from interpreting “NA” as NaN in a string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#read-csv-file-and-ignore-missing-value-markers">Read csv file and ignore missing value markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#read-csv-file-and-change-the-data-type-of-a-column">Read csv file and change the data type of a column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#write-csv-file">Write csv file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#write-csv-file-with-as-fields-separator">Write csv file with | as fields separator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#write-csv-file-but-not-save-the-dataframe-index">Write csv file but not save the DataFrame index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#write-csv-file-but-not-save-the-dataframe-header">Write csv file but not save the DataFrame header</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#write-csv-file-but-only-specific-columns">Write csv file but only specific columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#write-csv-file-don-t-use-quotes-and-use-backslash-as-escape-character">Write csv file; don’t use quotes and use backslash as escape character</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_files.html#append-dataframe-to-csv-file">Append DataFrame to csv file</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pandas/df_tidy.html">Tidy Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#drop-a-row-if-any-values-are-missing">Drop a row if ANY values are missing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#drop-a-row-only-if-all-values-are-missing">Drop a row only if ALL values are missing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#drop-a-column-if-any-values-are-missing">Drop a column if ANY values are missing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#drop-a-column-only-if-all-values-are-missing">Drop a column only if ALL values are missing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#drop-duplicate-rows-keeping-first-occurrence">Drop duplicate rows keeping <cite>first</cite> occurrence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#drop-duplicate-rows-keeping-last-occurrence">Drop duplicate rows keeping <cite>last</cite> occurrence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#drop-all-duplicates">Drop all duplicates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#drop-duplicate-rows-identifying-duplicates-on-the-giving-columns">Drop duplicate rows identifying duplicates on the giving columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#find-duplicates-based-on-giving-columns">Find duplicates based on giving columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#count-duplicates-rows">Count duplicates rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#count-duplicates-on-column">Count duplicates on column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#replace-all-missing-values-with-0">Replace all missing values with 0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#replace-missing-values-with-0-on-one-column">Replace missing values with 0 on one column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#replace-missing-values-on-multiple-columns">Replace missing values on multiple columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#replace-missing-values-with-forward-fill-propagate-non-null-values-forward">Replace missing values with forward fill (propagate non-null values forward)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#replace-missing-values-with-backward-fill-propagate-non-null-values-backward">Replace missing values with backward fill (propagate non-null values backward)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#replace-all-instances-of-a-value-in-a-column">Replace all instances of a value in a column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#count-missing-values-in-data">Count missing values in data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#count-missing-values-on-each-column-return-series">Count missing values on each column / return Series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#count-missing-values-on-specific-column">Count missing values on specific column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#percentage-of-missing-values-in-data">Percentage of missing values in data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#show-rows-with-missing-values-on-column">Show rows with missing values on column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#show-rows-with-no-missing-values-on-column">Show rows with no missing values on column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#convert-all-nans-to-none">Convert all NaNs to None</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#convert-column-to-numeric-will-error-if-column-has-non-numeric-values">Convert column to numeric (will error if column has non-numeric values)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#change-data-type-of-dataframe-column">Change data type of DataFrame column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#convert-column-to-datetime-will-error-if-column-has-datetime-values">Convert column to datetime (will error if column has datetime values)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_tidy.html#split-delimited-values-in-a-dataframe-column-into-two-new-columns">Split delimited values in a DataFrame column into two new columns</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pandas/df_summarize.html">Summarize Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_summarize.html#basic-descriptive-statistics-for-numeric-columns">Basic descriptive statistics for numeric columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_summarize.html#basic-descriptive-statistics-for-object-columns-e-g-strings-or-timestamps">Basic descriptive statistics for “object” columns (e.g. strings or timestamps)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_summarize.html#basic-descriptive-statistics-for-all-columns">Basic descriptive statistics for all columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_summarize.html#basic-descriptive-statistics-for-only-one-column">Basic descriptive statistics for only one column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_summarize.html#count-the-number-of-occurrences-of-each-value-excludes-missing-values">Count the number of occurrences of each value (excludes missing values)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_summarize.html#count-the-number-of-occurrences-of-each-value-includes-missing-values">Count the number of occurrences of each value (includes missing values)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_summarize.html#show-the-3-most-frequent-occurances-of-column-x">Show the 3 most frequent occurances of column_x</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_summarize.html#count-number-of-rows-in-a-dataframe">Count number of rows in a DataFrame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_summarize.html#count-number-of-distinct-values-in-a-column">Count number of distinct values in a column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_summarize.html#get-distinct-values-in-a-column">Get distinct values in a column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_summarize.html#randomly-select-30-of-rows-without-replacement">Randomly select 30% of rows without replacement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_summarize.html#randomly-select-30-of-rows-with-replacement">Randomly select 30% of rows with replacement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_summarize.html#randomly-select-10-rows">Randomly select 10 rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_summarize.html#randomly-split-a-dataframe-into-train-test">Randomly split a DataFrame into train/test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_summarize.html#get-first-7-rows-ordered-by-the-given-columns-in-descending-order">Get first 7 rows ordered by the given columns in descending order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_summarize.html#get-first-7-rows-ordered-by-the-given-columns-in-ascending-order">Get first 7 rows ordered by the given columns in ascending order</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pandas/df_selection.html">Select Data With .loc &amp; .iloc</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#loc-selection-by-index-labels-and-columns">.loc selection by index/labels and columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#loc-select-all-rows-and-some-columns-by-index-labels">.loc select all rows and some columns by index/labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#loc-select-some-rows-and-all-columns-by-index-labels">.loc select some rows and all columns by index/labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#loc-select-some-rows-and-some-columns-by-index-labels">.loc select some rows and some columns by index/labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#select-rows-whose-column-values-equal-some-value-scalar">Select rows whose column values <cite>equal</cite> some value/scalar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#select-rows-whose-column-values-do-not-equal-some-value-scalar">Select rows whose column values <cite>do not equal</cite> some_value/scalar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#select-rows-whose-column-values-are-in-a-list">Select rows whose column values <cite>are in</cite> a list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#select-rows-whose-column-values-are-not-in-a-list">Select rows whose column values <cite>are not</cite> in a list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#select-rows-that-satisfy-multiple-and-boolean-conditions">Select rows that satisfy multiple <cite>and</cite> (<cite>&amp;</cite>) boolean conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#select-rows-that-satisfy-multiple-or-boolean-conditions">Select rows that satisfy multiple <cite>or</cite> (<cite>|</cite>) boolean conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#update-column-values-based-on-rows-condition">Update column values based on rows condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#update-multiple-columns-values-based-on-rows-condition">Update multiple columns values based on rows condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#loc-selection-for-single-label-all-columns-returns-a-series">.loc selection for single label, all columns / returns a Series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#loc-selection-for-list-of-label-all-columns-returns-a-dataframe">.loc selection for list of label, all columns / returns a DataFrame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#loc-selection-for-single-label-single-column-returns-one-value">.loc selection for single label, single column / returns one value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#loc-selection-for-all-label-single-column-returns-a-series">.loc selection for all label, single column / returns a Series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#loc-selection-for-multiple-labels-multiple-columns-returns-a-dataframe">.loc selection for multiple labels, multiple columns / returns a DataFrame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#loc-selection-for-slice-of-labels-for-row-all-columns-returns-a-dataframe">.loc selection for slice of labels for row, all columns / returns a DataFrame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#loc-selection-for-all-rows-slice-of-columns-returns-a-dataframe">.loc selection for all rows, slice of columns / returns a DataFrame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#loc-selection-for-rows-and-columns-with-boolean-conditions">.loc selection for rows and columns with boolean conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#select-rows-1-and-3-and-second-column-with-boolean-conditions">Select rows 1 and 3, and second column with boolean conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#select-rows-whose-column-values-equals-a-scalar">Select rows whose column values equals a scalar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#select-rows-that-satisfy-multiple-boolean-conditions-keep-selected-columns">Select rows that satisfy multiple boolean conditions; keep selected columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#id1">Update column values based on rows condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#id2">Update multiple columns values based on rows condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#iloc-position-based-selection-from-0-to-length-1-of-the-axis">.iloc position based selection (from 0 to length-1 of the axis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#iloc-single-row-selections-all-columns">.iloc single row selections, all columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#iloc-single-column-selections-all-rows">.iloc single column selections, all rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#iloc-multiple-row-and-column-selections">.iloc multiple row and column selections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#iloc-selection-for-rows-and-columns-with-boolean-conditions">.iloc selection for rows and columns with boolean conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#select-the-rows-whose-index-label-is-an-even-number">Select the rows whose index label is an even number</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#select-slice-of-rows-with-iloc">Select slice of rows with .iloc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_selection.html#update-set-column-values-based-on-rows-condition-with-iloc">Update/set column values based on rows condition with .iloc</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pandas/df_reshape.html">Reshape Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#concatenate-two-dataframes-together-rows-of-df1-followed-by-rows-of-df2">Concatenate two DataFrames together, rows of df1 followed by rows of df2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#concatenate-two-dataframes-together-df2-to-the-right-side-of-df1">Concatenate two DataFrames together, df2 to the right side of df1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#concatenate-multiple-dataframes-together-appending-rows-horizontally">Concatenate multiple DataFrames together, appending rows horizontally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#append-a-single-row-to-a-dataframe-by-passing-a-series">Append a single row to a DataFrame by passing a Series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#id1">Append a single row to a DataFrame by passing a Series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#append-a-single-row-to-a-dataframe-by-passing-a-dict">Append a single row to a DataFrame by passing a dict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#id2">Append a single row to a DataFrame by passing a dict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#inner-join-two-dataframes-on-common-key-column">Inner Join two DataFrames on common key column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#left-join-two-dataframes">Left Join two DataFrames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#right-join-two-dataframes">Right Join two DataFrames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#full-outer-join-two-dataframes-on-common-key-column">Full Outer Join two DataFrames on common key column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#inner-join-two-dataframes-on-index">Inner Join two DataFrames on index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#join-two-dataframes-on-nearest-key-asof-merge">Join two DataFrames on nearest key (asof merge)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#id3">Join two DataFrames on nearest key (asof merge)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#transpose-data-frame-rows-become-columns-columns-become-rows">Transpose data frame (rows become columns, columns become rows)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#pivot-rows-to-columns-long-format-to-wide-one-value">Pivot rows to columns (long format to wide), one value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#pivot-rows-to-columns-long-format-to-wide-multiple-values">Pivot rows to columns (long format to wide), multiple values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#pivot-table-with-totals">Pivot table with totals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#melt-columns-to-rows-wide-format-to-long">Melt columns to rows (wide format to long)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_reshape.html#melt-selected-columns-to-rows-wide-format-to-long">Melt selected columns to rows (wide format to long)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pandas/df_grouping.html">Group Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_grouping.html#group-by-one-column-one-column-aggregated-one-aggregation">Group by one column, one column aggregated, one aggregation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_grouping.html#group-by-two-columns-one-column-aggregated-one-aggregation">Group by two columns, one column aggregated, one aggregation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_grouping.html#group-by-two-columns-multiple-columns-aggregated-one-aggregation">Group by two columns, multiple columns aggregated, one aggregation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_grouping.html#group-by-one-column-one-column-aggregated-multiple-aggregations">Group by one column, one column aggregated, multiple aggregations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_grouping.html#group-by-one-column-multiple-columns-aggregated-multiple-aggregations">Group by one column, multiple columns aggregated, multiple aggregations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_grouping.html#group-by-named-aggregation-group-by-one-column-multiple-columns-aggregated-multiple-aggregations">Group by named aggregation: group by one column, multiple columns aggregated, multiple aggregations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_grouping.html#id1">Group by one column, one column aggregated, one aggregation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_grouping.html#id2">Group by two columns, one column aggregated, one aggregation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_grouping.html#id3">Group by two columns, multiple columns aggregated, one aggregation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_grouping.html#id4">Group by one column, one column aggregated, multiple aggregations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_grouping.html#id5">Group by one column, multiple columns aggregated, multiple aggregations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_grouping.html#filter-within-a-groupby-filters-the-rows-on-a-property-of-the-group-they-belong-to">Filter (within a GroupBy), filters the rows on a property of the group they belong to</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_grouping.html#transform-within-a-groupby-calculates-a-new-value-for-each-row-based-on-a-property-of-the-group">Transform (within a GroupBy), calculates a new value for each row based on a property of the group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_grouping.html#center-the-data-by-subtracting-the-group-wise-mean">Center the data by subtracting the group-wise mean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_grouping.html#apply-within-a-groupby-applies-an-arbitrary-function-to-the-group-results">Apply (within a GroupBy), applies an arbitrary function to the group results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_grouping.html#get-top-n-rows-for-each-group-of-columns-in-a-sorted-dataframe">Get top n rows for each group of columns in a sorted dataframe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_grouping.html#get-bottom-n-rows-for-each-group-of-columns-in-a-sorted-dataframe">Get bottom n rows for each group of columns in a sorted dataframe</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pandas/df_timeseries.html">Time Series Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_timeseries.html#create-datetime-object-with-python-s-native-method">Create datetime object with python’s native method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_timeseries.html#id1">Create datetime object with python’s native method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_timeseries.html#extract-date-time-parts-from-datetime">Extract date, time parts from datetime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_timeseries.html#create-datetime-object-with-numpy-datetime64">Create datetime object with numpy (datetime64)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_timeseries.html#create-datetime-object-with-pandas-timestamp">Create datetime object with pandas (Timestamp)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_timeseries.html#create-datetime-object-with-pandas-datetime64">Create datetime object with pandas (datetime64)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_timeseries.html#create-dataframe-with-datetimeindex-as-index">Create DataFrame with DatetimeIndex as index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_timeseries.html#slice-dataframe-with-datetimeindex-on-specific-year-month-period">Slice DataFrame with DatetimeIndex on specific year/month/period</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_timeseries.html#resample-time-series-with-aggregation">Resample time series with aggregation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_timeseries.html#resample-time-series-with-selection">Resample time series with selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_timeseries.html#add-missing-business-dates-in-a-time-series-backfill-them-with-nan">Add missing business dates in a time series, backfill them with NaN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_timeseries.html#add-missing-business-dates-in-a-time-series-backfill-them-with-previous-row-s-data">Add missing business dates in a time series, backfill them with previous row’s data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_timeseries.html#add-missing-business-dates-in-a-time-series-backfill-them-with-next-row-s-data">Add missing business dates in a time series, backfill them with next row’s data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas/df_timeseries.html#find-the-3rd-friday-of-the-month-i-e-2022-03">Find the 3rd Friday of the month i.e 2022-03</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pandas/df_basics.html" class="btn btn-neutral float-right" title="Basics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019-24, allthesnippets.com. Last updated 2024-03-12.
+
+    </p>
+  </div>
+    <p style="margin-left: 190px;">
+    	<a href="https://www.allthesnippets.com/updates.html">What was updated?</a>
+    </p>
+     
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="_static/copybutton.js"></script>
+        <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-130165634-1"></script>
+        <script type="text/javascript" src="_static/js/google_analytics_tracker.js"></script>
+        <script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

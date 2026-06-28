@@ -1,0 +1,520 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta content="Find DataFrame's number of rows and columns, display top and tail 30 rows, show columns types." name="description" />
+<meta content="pandas,head,tail,shape,type,columns,sort,cheat sheet" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pandas snippets for data examination and exploration</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/snippets-style.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Files" href="df_files.html" />
+    <link rel="prev" title="Axis" href="df_axis.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+Share: <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Pandas%20Snippets%20And%20Cheat%20Sheets%20Collection%20For%20Data%20Science%20https%3A%2F%2Fallthesnippets.com%2Fbrowse%2Findex.html"
+target="_blank">
+	<span class="fa fa-twitter-square fa-2x"></span>
+</a>
+
+ <a href="http://www.facebook.com/sharer.php?u=https://allthesnippets.com/browse/index.html" target="_blank" title="Facebook">
+ 	<span class="fa fa-facebook-square fa-2x"></span>
+ </a>
+
+<a href="http://www.linkedin.com/shareArticle?mini=true&url=https://allthesnippets.com/browse/index.html" target="_blank" title="Likedin">
+	<span class="fa fa-linkedin-square fa-2x"></span>
+</a>
+
+<a href="mailto:?subject=pandas%20cheat%20sheets&body=Pandas%20Snippets%20And%20Cheat%20Sheets%20Collection%20For%20Data%20Science%20https%3A%2F%2Fallthesnippets.com%2Fbrowse%2Findex.html" title="Share by Email" target=_blank>
+    <span class="fa fa-2x fa-envelope-square"></span>
+</a>
+
+<br />
+<a href="http://www.allthesnippets.com" class="icon icon-home">&nbsp;All-The-Snippets Home</a>
+<br />
+
+
+          
+            <a href="../index.html" class="icon icon-home"> Browse Snippets
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">All The Snippets:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../pandas.html">Pandas snippets</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="df_basics.html">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_axis.html">Axis</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Examine Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#show-the-first-30-and-last-30-rows">Show the first 30 and last 30 rows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#show-info-on-index-data-types-memory-usage">Show info on index, data types, memory usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#show-type-of-df-object">Show type of df object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#show-the-first-5-rows">Show the first 5 rows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#show-the-first-10-rows">Show the first 10 rows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#show-the-last-5-rows">Show the last 5 rows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#show-the-index-aka-the-labels">Show “the index” (aka “the labels”)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#show-the-column-names">Show the column names</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#show-data-types-of-each-column">Show data types of each column</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#show-number-of-rows-and-columns">Show number of rows and columns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#show-number-of-rows-only">Show number of rows only</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#show-number-of-columns-only">Show number of columns only</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-dataframe-values-as-numpy-array">Get DataFrame values as numpy array</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#show-info-on-rows-and-columns-indexes">Show info on rows and columns indexes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-a-concise-summary-of-a-dataframe">Get a concise summary of a DataFrame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-memory-usage-by-column">Get memory usage by column</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-maximum-number-of-rows-and-columns-printed-to-unlimited">Set maximum number of rows and columns printed to unlimited</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reset-maximum-number-of-rows-and-columns-printed-to-default">Reset maximum number of rows and columns printed to default</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#suppress-scientific-notation">Suppress scientific notation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reset-floats-display">Reset floats display</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#change-float-format-to-two-decimal-places">Change float format to two decimal places</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-maximum-number-of-rows-and-columns-printed-to-unlimited-temporary">Set maximum number of rows and columns printed to unlimited temporary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sort-dataframe-by-one-column-values-ascending">Sort dataframe by one column values ascending</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sort-the-dataframe-by-one-column-values-descending">Sort the dataframe by one column values descending</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sort-the-dataframe-by-one-column-values-ascending-inplace">Sort the dataframe by one column values ascending, inplace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sort-the-dataframe-by-multiple-columns-values">Sort the dataframe by multiple columns values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sort-the-dataframe-based-on-the-index-labels-ascending">Sort the dataframe based on the index labels ascending</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sort-the-dataframe-based-on-the-columns-labels-ascending">Sort the dataframe based on the columns labels ascending</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Sort the dataframe based on the columns labels ascending</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="df_files.html">Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_tidy.html">Tidy Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_summarize.html">Summarize Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_selection.html">Select Data With .loc &amp; .iloc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_reshape.html">Reshape Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_grouping.html">Group Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_timeseries.html">Time Series Data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../python.html">Python snippets</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Browse Snippets</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../pandas.html">Pandas snippets</a> &raquo;</li>
+        
+      <li>Pandas snippets for data examination and exploration</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/pandas/df_examine.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div style="margin: auto; text-align: center;">
+  <a class="gumroad-button" href="https://gumroad.com/l/allthesnippets">Get Pandas Snippets and Cheats Collection eBook</a>
+</div><div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="examine-data">
+<h1>Examine Data</h1>
+<p>Common operations to explore pandas DataFrames are: find number of rows and columns, display top and tail rows, show columns types, sort values.</p>
+<div class="section" id="show-the-first-30-and-last-30-rows">
+<h2>Show the first 30 and last 30 rows</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-info-on-index-data-types-memory-usage">
+<h2>Show info on index, data types, memory usage</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-type-of-df-object">
+<h2>Show type of df object</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="c1"># &gt;&gt;&gt; &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-the-first-5-rows">
+<h2>Show the first 5 rows</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-the-first-10-rows">
+<h2>Show the first 10 rows</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-the-last-5-rows">
+<h2>Show the last 5 rows</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-the-index-aka-the-labels">
+<h2>Show “the index” (aka “the labels”)</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">index</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="c1"># &gt;&gt;&gt; &lt;class &#39;pandas.core.indexes.base.Index&#39;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-the-column-names">
+<h2>Show the column names</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="c1"># &gt;&gt;&gt; &lt;class &#39;pandas.core.indexes.base.Index&#39;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-data-types-of-each-column">
+<h2>Show data types of each column</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-number-of-rows-and-columns">
+<h2>Show number of rows and columns</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-number-of-rows-only">
+<h2>Show number of rows only</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-number-of-columns-only">
+<h2>Show number of columns only</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-dataframe-values-as-numpy-array">
+<h2>Get DataFrame values as numpy array</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-info-on-rows-and-columns-indexes">
+<h2>Show info on rows and columns indexes</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">axes</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-a-concise-summary-of-a-dataframe">
+<h2>Get a concise summary of a DataFrame</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;Alex&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Clarke&#39;</span><span class="p">,</span> <span class="mi">13</span><span class="p">]]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="c1">#&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</span>
+<span class="n">Index</span><span class="p">:</span> <span class="mi">3</span> <span class="n">entries</span><span class="p">,</span> <span class="n">a</span> <span class="n">to</span> <span class="n">c</span>
+<span class="n">Data</span> <span class="n">columns</span> <span class="p">(</span><span class="n">total</span> <span class="mi">2</span> <span class="n">columns</span><span class="p">):</span>
+<span class="n">Name</span>    <span class="mi">3</span> <span class="n">non</span><span class="o">-</span><span class="n">null</span> <span class="nb">object</span>
+<span class="n">Age</span>     <span class="mi">3</span> <span class="n">non</span><span class="o">-</span><span class="n">null</span> <span class="n">int64</span>
+<span class="n">dtypes</span><span class="p">:</span> <span class="n">int64</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="nb">object</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">memory</span> <span class="n">usage</span><span class="p">:</span> <span class="mf">72.0</span><span class="o">+</span> <span class="nb">bytes</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-memory-usage-by-column">
+<h2>Get memory usage by column</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-maximum-number-of-rows-and-columns-printed-to-unlimited">
+<h2>Set maximum number of rows and columns printed to unlimited</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># default is 60 rows</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;max_rows&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="c1"># default is 20 columns</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;max_columns&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reset-maximum-number-of-rows-and-columns-printed-to-default">
+<h2>Reset maximum number of rows and columns printed to default</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">reset_option</span><span class="p">(</span><span class="s1">&#39;max_rows&#39;</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">reset_option</span><span class="p">(</span><span class="s1">&#39;max_columns&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="suppress-scientific-notation">
+<h2>Suppress scientific notation</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># display all floats with commas and two decimal places</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.float_format&#39;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{:,.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="c1"># or</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">float_format</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:,.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reset-floats-display">
+<h2>Reset floats display</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">reset_option</span><span class="p">(</span><span class="s1">&#39;display.float_format&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="change-float-format-to-two-decimal-places">
+<h2>Change float format to two decimal places</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># using rounding</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;col_x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1"># using apply</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;col_x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-maximum-number-of-rows-and-columns-printed-to-unlimited-temporary">
+<h2>Set maximum number of rows and columns printed to unlimited temporary</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># settings are restored when you exit the &#39;with&#39; block</span>
+<span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">option_context</span><span class="p">(</span><span class="s1">&#39;max_rows&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;max_columns&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sort-dataframe-by-one-column-values-ascending">
+<h2>Sort dataframe by one column values ascending</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;col_x&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sort-the-dataframe-by-one-column-values-descending">
+<h2>Sort the dataframe by one column values descending</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;col_x&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sort-the-dataframe-by-one-column-values-ascending-inplace">
+<h2>Sort the dataframe by one column values ascending, inplace</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;col_x&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sort-the-dataframe-by-multiple-columns-values">
+<h2>Sort the dataframe by multiple columns values</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">&#39;col_x&#39;</span><span class="p">,</span> <span class="s1">&#39;col_y&#39;</span><span class="p">,</span> <span class="s1">&#39;col_z&#39;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sort-the-dataframe-based-on-the-index-labels-ascending">
+<h2>Sort the dataframe based on the index labels ascending</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sort-the-dataframe-based-on-the-columns-labels-ascending">
+<h2>Sort the dataframe based on the columns labels ascending</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>Sort the dataframe based on the columns labels ascending</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Tom&#39;</span><span class="p">,</span> <span class="s1">&#39;Jack&#39;</span><span class="p">,</span> <span class="s1">&#39;Steve&#39;</span><span class="p">,</span> <span class="s1">&#39;Ricky&#39;</span><span class="p">],</span> <span class="s1">&#39;Age&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">42</span><span class="p">]}</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+    <span class="n">Name</span>  <span class="n">Age</span>
+<span class="mi">0</span>    <span class="n">Tom</span>   <span class="mi">28</span>
+<span class="mi">1</span>   <span class="n">Jack</span>   <span class="mi">34</span>
+<span class="mi">2</span>  <span class="n">Steve</span>   <span class="mi">29</span>
+<span class="mi">3</span>  <span class="n">Ricky</span>   <span class="mi">42</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># note how `Age` column moved first</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+   <span class="n">Age</span>   <span class="n">Name</span>
+<span class="mi">0</span>   <span class="mi">28</span>    <span class="n">Tom</span>
+<span class="mi">1</span>   <span class="mi">34</span>   <span class="n">Jack</span>
+<span class="mi">2</span>   <span class="mi">29</span>  <span class="n">Steve</span>
+<span class="mi">3</span>   <span class="mi">42</span>  <span class="n">Ricky</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="df_files.html" class="btn btn-neutral float-right" title="Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="df_axis.html" class="btn btn-neutral" title="Axis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019-24, allthesnippets.com. Last updated 2024-03-12.
+
+    </p>
+  </div>
+    <p style="margin-left: 190px;">
+    	<a href="https://www.allthesnippets.com/updates.html">What was updated?</a>
+    </p>
+     
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-130165634-1"></script>
+        <script type="text/javascript" src="../_static/js/google_analytics_tracker.js"></script>
+        <script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

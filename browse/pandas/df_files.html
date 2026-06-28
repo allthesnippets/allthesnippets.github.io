@@ -1,0 +1,442 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta content="Read and write data with pandas, parse dates, handle missing data, escape delimiters." name="description" />
+<meta content="pandas,read_csv,skiprows,parse_dates,escapechar,quoting,na_filter,cheat sheet" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pandas snippets to read &amp; write to csv and other formats</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/snippets-style.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tidy Data" href="df_tidy.html" />
+    <link rel="prev" title="Examine Data" href="df_examine.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+Share: <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Pandas%20Snippets%20And%20Cheat%20Sheets%20Collection%20For%20Data%20Science%20https%3A%2F%2Fallthesnippets.com%2Fbrowse%2Findex.html"
+target="_blank">
+	<span class="fa fa-twitter-square fa-2x"></span>
+</a>
+
+ <a href="http://www.facebook.com/sharer.php?u=https://allthesnippets.com/browse/index.html" target="_blank" title="Facebook">
+ 	<span class="fa fa-facebook-square fa-2x"></span>
+ </a>
+
+<a href="http://www.linkedin.com/shareArticle?mini=true&url=https://allthesnippets.com/browse/index.html" target="_blank" title="Likedin">
+	<span class="fa fa-linkedin-square fa-2x"></span>
+</a>
+
+<a href="mailto:?subject=pandas%20cheat%20sheets&body=Pandas%20Snippets%20And%20Cheat%20Sheets%20Collection%20For%20Data%20Science%20https%3A%2F%2Fallthesnippets.com%2Fbrowse%2Findex.html" title="Share by Email" target=_blank>
+    <span class="fa fa-2x fa-envelope-square"></span>
+</a>
+
+<br />
+<a href="http://www.allthesnippets.com" class="icon icon-home">&nbsp;All-The-Snippets Home</a>
+<br />
+
+
+          
+            <a href="../index.html" class="icon icon-home"> Browse Snippets
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">All The Snippets:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../pandas.html">Pandas snippets</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="df_basics.html">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_axis.html">Axis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_examine.html">Examine Data</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#file-formats-that-can-be-read-in-write-to">File formats that can be read in/write to</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#read-csv-file">Read csv file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#read-csv-file-with-as-fields-separator">Read csv file with | as fields separator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#read-only-10-rows-of-csv-file">Read only 10 rows of csv file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#read-csv-file-and-skip-first-3-rows">Read csv file and skip first 3 rows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#read-csv-file-and-parse-treat-columns-as-dates">Read csv file and parse/treat columns as dates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#read-csv-file-while-specifying-column-names">Read csv file while specifying column names</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#read-csv-file-and-set-the-index-as-column-id">Read csv file and set the index as column_id</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#read-csv-file-and-set-the-index-as-multi-columns">Read csv file and set the index as multi columns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#read-csv-file-and-set-as-missing-values">Read csv file and set “.” as missing values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#read-csv-file-and-set-different-missing-values-on-columns">Read csv file and set different missing values on columns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#read-csv-file-and-prevent-pandas-from-interpreting-na-as-nan-in-a-string">Read csv file and prevent pandas from interpreting “NA” as NaN in a string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#read-csv-file-and-ignore-missing-value-markers">Read csv file and ignore missing value markers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#read-csv-file-and-change-the-data-type-of-a-column">Read csv file and change the data type of a column</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#write-csv-file">Write csv file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#write-csv-file-with-as-fields-separator">Write csv file with | as fields separator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#write-csv-file-but-not-save-the-dataframe-index">Write csv file but not save the DataFrame index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#write-csv-file-but-not-save-the-dataframe-header">Write csv file but not save the DataFrame header</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#write-csv-file-but-only-specific-columns">Write csv file but only specific columns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#write-csv-file-don-t-use-quotes-and-use-backslash-as-escape-character">Write csv file; don’t use quotes and use backslash as escape character</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#append-dataframe-to-csv-file">Append DataFrame to csv file</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="df_tidy.html">Tidy Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_summarize.html">Summarize Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_selection.html">Select Data With .loc &amp; .iloc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_reshape.html">Reshape Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_grouping.html">Group Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_timeseries.html">Time Series Data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../python.html">Python snippets</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Browse Snippets</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../pandas.html">Pandas snippets</a> &raquo;</li>
+        
+      <li>Pandas snippets to read &amp; write to csv and other formats</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/pandas/df_files.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div style="margin: auto; text-align: center;">
+  <a class="gumroad-button" href="https://gumroad.com/l/allthesnippets">Get Pandas Snippets and Cheats Collection eBook</a>
+</div><div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="files">
+<h1>Files</h1>
+<p>Pandas can import data from local computer or from an URL into a DataFrame object. It can read various formats like CSV, HTML, JSON, etc.
+It can also export a DataFrame object to CSV or other formats.</p>
+<div class="section" id="file-formats-that-can-be-read-in-write-to">
+<h2>File formats that can be read in/write to</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># File formats that can be read in/write to</span>
+
+<span class="c1"># Format Type     Data Description      Reader           Writer</span>
+<span class="c1"># text                  CSV            read_csv          to_csv</span>
+<span class="c1"># text                 JSON            read_json         to_json</span>
+<span class="c1"># text                 HTML            read_html         to_html</span>
+<span class="c1"># text             Local clipboard  read_clipboard     to_clipboard</span>
+<span class="c1"># binary             MS Excel          read_excel        to_excel</span>
+<span class="c1"># binary            HDF5 Format        read_hdf           to_hdf</span>
+<span class="c1"># binary           Feather Format     read_feather      to_feather</span>
+<span class="c1"># binary              Msgpack         read_msgpack      to_msgpack</span>
+<span class="c1"># binary               Stata           read_stata        to_stata</span>
+<span class="c1"># binary                SAS             read_sas</span>
+<span class="c1"># binary        Python Pickle Format   read_pickle       to_pickle</span>
+<span class="c1"># binary           Parquet Form        read_parquet       to_parquet</span>
+<span class="c1"># SQL                   SQL             read_sql          to_sql</span>
+<span class="c1"># SQL             Google Big Query      read_gbq          to_gbq</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="read-csv-file">
+<h2>Read csv file</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="read-csv-file-with-as-fields-separator">
+<h2>Read csv file with | as fields separator</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="read-only-10-rows-of-csv-file">
+<h2>Read only 10 rows of csv file</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="read-csv-file-and-skip-first-3-rows">
+<h2>Read csv file and skip first 3 rows</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="read-csv-file-and-parse-treat-columns-as-dates">
+<h2>Read csv file and parse/treat columns as dates</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">,</span>
+                 <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;column_x_date&#39;</span><span class="p">,</span> <span class="s1">&#39;column_y_date&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="read-csv-file-while-specifying-column-names">
+<h2>Read csv file while specifying column names</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;column_1&#39;</span><span class="p">,</span> <span class="s1">&#39;column_2&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="read-csv-file-and-set-the-index-as-column-id">
+<h2>Read csv file and set the index as column_id</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;column_id&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="read-csv-file-and-set-the-index-as-multi-columns">
+<h2>Read csv file and set the index as multi columns</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;column_id1&#39;</span><span class="p">,</span> <span class="s1">&#39;column_id2&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="read-csv-file-and-set-as-missing-values">
+<h2>Read csv file and set “.” as missing values</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="read-csv-file-and-set-different-missing-values-on-columns">
+<h2>Read csv file and set different missing values on columns</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># `column_x` missing values to be set as `nope`</span>
+<span class="c1"># `column_y` missing values to be set as `.`</span>
+<span class="n">missings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;column_x&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;nope&#39;</span><span class="p">],</span> <span class="s1">&#39;column_y&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;.&#39;</span><span class="p">]}</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="n">missings</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="read-csv-file-and-prevent-pandas-from-interpreting-na-as-nan-in-a-string">
+<h2>Read csv file and prevent pandas from interpreting “NA” as NaN in a string</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># The default NaN recognized values are [&#39;-1.#IND&#39;, &#39;1.#QNAN&#39;, &#39;1.#IND&#39;,</span>
+<span class="c1"># &#39;-1.#QNAN&#39;, &#39;#N/A N/A&#39;, &#39;#N/A&#39;, &#39;N/A&#39;, &#39;n/a&#39;, &#39;NA&#39;, &#39;#NA&#39;, &#39;NULL&#39;,</span>
+<span class="c1"># &#39;null&#39;, &#39;NaN&#39;, &#39;-NaN&#39;, &#39;nan&#39;, &#39;-nan&#39;, &#39;&#39;].</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">,</span> <span class="n">keep_default_na</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="read-csv-file-and-ignore-missing-value-markers">
+<h2>Read csv file and ignore missing value markers</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># improve performance of reading a large file in data without any NAs</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">na_filter</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="read-csv-file-and-change-the-data-type-of-a-column">
+<h2>Read csv file and change the data type of a column</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;column_x&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="write-csv-file">
+<h2>Write csv file</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="write-csv-file-with-as-fields-separator">
+<h2>Write csv file with | as fields separator</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="write-csv-file-but-not-save-the-dataframe-index">
+<h2>Write csv file but not save the DataFrame index</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="write-csv-file-but-not-save-the-dataframe-header">
+<h2>Write csv file but not save the DataFrame header</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="write-csv-file-but-only-specific-columns">
+<h2>Write csv file but only specific columns</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;column_x&#39;</span><span class="p">,</span> <span class="s1">&#39;column_y&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="write-csv-file-don-t-use-quotes-and-use-backslash-as-escape-character">
+<h2>Write csv file; don’t use quotes and use backslash as escape character</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">,</span> <span class="n">quoting</span><span class="o">=</span><span class="n">csv</span><span class="o">.</span><span class="n">QUOTE_NONE</span><span class="p">,</span> <span class="n">escapechar</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="append-dataframe-to-csv-file">
+<h2>Append DataFrame to csv file</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;local_path/file.csv&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="df_tidy.html" class="btn btn-neutral float-right" title="Tidy Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="df_examine.html" class="btn btn-neutral" title="Examine Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019-24, allthesnippets.com. Last updated 2024-03-12.
+
+    </p>
+  </div>
+    <p style="margin-left: 190px;">
+    	<a href="https://www.allthesnippets.com/updates.html">What was updated?</a>
+    </p>
+     
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-130165634-1"></script>
+        <script type="text/javascript" src="../_static/js/google_analytics_tracker.js"></script>
+        <script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

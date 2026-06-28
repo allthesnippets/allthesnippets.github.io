@@ -1,0 +1,345 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta content="Comprehensive collection of python pandas snippets and cheat sheets for processing and analyzing data." name="description" />
+<meta content="pandas, python, snippets, cheat sheets, DataFrame, Series" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Python Snippets And Cheat Sheets</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/snippets-style.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Basics" href="python/python_basics.html" />
+    <link rel="prev" title="Time Series Data" href="pandas/df_timeseries.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+Share: <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Pandas%20Snippets%20And%20Cheat%20Sheets%20Collection%20For%20Data%20Science%20https%3A%2F%2Fallthesnippets.com%2Fbrowse%2Findex.html"
+target="_blank">
+	<span class="fa fa-twitter-square fa-2x"></span>
+</a>
+
+ <a href="http://www.facebook.com/sharer.php?u=https://allthesnippets.com/browse/index.html" target="_blank" title="Facebook">
+ 	<span class="fa fa-facebook-square fa-2x"></span>
+ </a>
+
+<a href="http://www.linkedin.com/shareArticle?mini=true&url=https://allthesnippets.com/browse/index.html" target="_blank" title="Likedin">
+	<span class="fa fa-linkedin-square fa-2x"></span>
+</a>
+
+<a href="mailto:?subject=pandas%20cheat%20sheets&body=Pandas%20Snippets%20And%20Cheat%20Sheets%20Collection%20For%20Data%20Science%20https%3A%2F%2Fallthesnippets.com%2Fbrowse%2Findex.html" title="Share by Email" target=_blank>
+    <span class="fa fa-2x fa-envelope-square"></span>
+</a>
+
+<br />
+<a href="http://www.allthesnippets.com" class="icon icon-home">&nbsp;All-The-Snippets Home</a>
+<br />
+
+
+          
+            <a href="index.html" class="icon icon-home"> Browse Snippets
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">All The Snippets:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="pandas.html">Pandas snippets</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Python snippets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/python_basics.html">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_strings.html">Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lists.html">Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_dictionaries.html">Dictionaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lambdas.html">Lambdas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_map_filter_reduce.html">Map, Filter, Reduce</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Browse Snippets</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Python Snippets And Cheat Sheets</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/python.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div style="margin: auto; text-align: center;">
+  <a class="gumroad-button" href="https://gumroad.com/l/allthesnippets">Get Pandas Snippets and Cheats Collection eBook</a>
+</div><div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="python-snippets">
+<h1>Python snippets</h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="python/python_basics.html">Basics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/python_basics.html#make-script-directly-executable-with-a-python-interpreter">Make script directly executable with a Python interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_basics.html#get-all-properties-and-methods-of-an-object">Get all properties and methods of an object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_basics.html#swap-values-of-two-variables-with-multiple-assignment">Swap values of two variables (with multiple assignment)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_basics.html#swap-values-of-two-variables-with-a-third-variable">Swap values of two variables (with a third variable)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_basics.html#check-a-variable-is-not-none">Check a variable is not None</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_basics.html#ternary-conditional-operator">Ternary conditional operator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_basics.html#for-statement">for statement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_basics.html#for-statement-example">for statement example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_basics.html#iterate-over-a-sequence-of-numbers-range-function">Iterate over a sequence of numbers (range function)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_basics.html#id1">Iterate over a sequence of numbers (range function)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_basics.html#if-statements">if statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_basics.html#while-loop">while loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_basics.html#while-loop-example">while loop example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_basics.html#fibonacci-series">Fibonacci series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_basics.html#break-and-continue-statements-on-loops">break and continue statements on loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_basics.html#command-line-arguments-sys-argv">Command line arguments (sys.argv)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python/python_strings.html">Strings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/python_strings.html#define-long-string-use-brackets-to-join-multiline-string">Define long string (use brackets to join multiline string)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_strings.html#define-long-string-use-backslash-to-join-multiline-string">Define long string (use backslash to join multiline string)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_strings.html#define-long-string-use-triple-quotes-to-join-a-multiline-string">Define long string (use triple quotes to join a multiline string)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_strings.html#pad-a-string-with-leading-0s">Pad a string with leading 0s</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_strings.html#reverse-a-string">Reverse a string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_strings.html#check-if-string-is-number">Check if string is number</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_strings.html#combining-strings-concatenation">Combining strings (concatenation)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python/python_lists.html">Lists</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lists.html#accessing-and-slicing-a-list">Accessing and slicing a list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lists.html#looping-over-lists">Looping over lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lists.html#adding-elements">Adding elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lists.html#removing-elements">Removing elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lists.html#sorting-and-reversing-lists">Sorting and reversing lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lists.html#simple-statistics-on-numerical-list">Simple statistics on numerical list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lists.html#shuffle-a-list">Shuffle a list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lists.html#randomly-select-an-item-from-the-list">Randomly select an item from the list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lists.html#combine-lists-with-zip-iterator">Combine lists with zip iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lists.html#unpacking-list-of-lists-with-zip-and-operator">Unpacking list of lists with zip and <cite>*</cite> operator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lists.html#list-comprehension">List comprehension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lists.html#list-comprehension-with-condition">List comprehension with condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lists.html#list-comprehension-nested-loops">List comprehension (nested loops)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lists.html#list-comprehension-with-if-else">List comprehension with if..else</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lists.html#transpose-a-matrix-with-list-comprehension">Transpose a matrix with list comprehension</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python/python_dictionaries.html">Dictionaries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/python_dictionaries.html#convert-two-lists-into-a-dictionary-with-zip">Convert two lists into a dictionary (with zip)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_dictionaries.html#convert-two-lists-into-a-dictionary-with-dict-comprehension">Convert two lists into a dictionary (with dict comprehension)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_dictionaries.html#looping-through-all-key-value-pairs">Looping through all key-value pairs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_dictionaries.html#looping-through-all-the-keys">Looping through all the keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_dictionaries.html#looping-through-all-the-values">Looping through all the values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_dictionaries.html#removing-key-value-pair">Removing key-value pair</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_dictionaries.html#merging-two-dictionaries">Merging two dictionaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_dictionaries.html#dictionary-comprehension">Dictionary comprehension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_dictionaries.html#update-a-dictionary-s-keys-with-comprehension">Update a dictionary’s keys with comprehension</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python/python_lambdas.html">Lambdas</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lambdas.html#lambda-function-syntax">Lambda function syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lambdas.html#lambda-function-to-add-3-numbers">Lambda function to add 3 numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lambdas.html#lambda-passed-as-argument-to-function-sorted">Lambda passed as argument to function sorted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lambdas.html#lambda-passed-as-argument-to-function-sort">Lambda passed as argument to function sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_lambdas.html#lambda-passed-as-argument-to-function-max">Lambda passed as argument to function max</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python/python_map_filter_reduce.html">Map, Filter, Reduce</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/python_map_filter_reduce.html#map-syntax">map syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_map_filter_reduce.html#map-compute-squares-values-of-a-list">map - Compute squares values of a list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_map_filter_reduce.html#map-convert-a-list-with-strings-to-uppercase">map - Convert a list with strings to uppercase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_map_filter_reduce.html#map-element-wise-addition-of-2-lists">map - Element-wise addition of 2 lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_map_filter_reduce.html#filter-syntax">filter syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_map_filter_reduce.html#filter-get-list-of-even-numbers-from-a-range">filter - Get list of even numbers from a range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_map_filter_reduce.html#filter-get-only-strings-with-a-length-of-3-characters-from-a-list">filter - Get only strings with a length of 3 characters from a list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_map_filter_reduce.html#reduce-syntax">reduce syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_map_filter_reduce.html#reduce-sum-up-elements-of-a-list">reduce - Sum up elements of a list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/python_map_filter_reduce.html#reduce-sum-up-elements-of-a-list-with-an-initial-value">reduce - Sum up elements of a list (with an initial value)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="python/python_basics.html" class="btn btn-neutral float-right" title="Basics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pandas/df_timeseries.html" class="btn btn-neutral" title="Time Series Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019-24, allthesnippets.com. Last updated 2024-03-12.
+
+    </p>
+  </div>
+    <p style="margin-left: 190px;">
+    	<a href="https://www.allthesnippets.com/updates.html">What was updated?</a>
+    </p>
+     
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="_static/copybutton.js"></script>
+        <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-130165634-1"></script>
+        <script type="text/javascript" src="_static/js/google_analytics_tracker.js"></script>
+        <script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

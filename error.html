@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect Page</title>
+</head>
+<body>
+    <script>
+        // Get the current browser location
+        var currentLocation = window.location.href;
+
+        // Define the base URLs for redirection
+        var baseUrls = ['https://www.allthesnippets.com', 'https://allthesnippets.com'];
+
+        // display current url
+        document.write(currentLocation)
+
+        // Check if the current location matches the browse or search paths for any base URL
+        var redirectToIndex = false;
+        baseUrls.forEach(function(baseUrl) {
+            if ((currentLocation === baseUrl + '/browse/' || currentLocation === baseUrl + '/browse')) {
+                // Redirect to the browse index page
+                redirectToIndex = true;
+                window.location.href = baseUrl + '/browse/index.html';
+            } else if ((currentLocation === baseUrl + '/search/' || currentLocation === baseUrl + '/search')) {
+                // Redirect to the search index page
+                redirectToIndex = true;
+                window.location.href = baseUrl + '/search/index.html';
+            }
+        });
+
+        // If the location doesn't match browse or search paths, display a message
+        if (!redirectToIndex) {
+            document.write('<h1>All-The-Snippets: Page doesn\'t exist.</h1>');
+            document.write('<p>Try main page <a href="' + baseUrls[0] + '">www.allthesnippets.com</a></p>');
+            document.write('<p>Try search page <a href="' + baseUrls[0] + '/search/index.html' + '">www.allthesnippets.com/search/index.html</a></p>');
+            document.write('<p>Try browse page <a href="' + baseUrls[0] + '/browse/index.html' + '">www.allthesnippets.com/browse/index.html</a></p>');
+        }
+    </script>
+</body>
+</html>

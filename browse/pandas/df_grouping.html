@@ -1,0 +1,505 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta content="Group, split, apply and combine pandas DataFrame rows" name="description" />
+<meta content="pandas,groupby,transforming,aggregation,filtration,cheat sheet" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pandas snippets to group, aggregate, filter DataFrames</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/snippets-style.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Time Series Data" href="df_timeseries.html" />
+    <link rel="prev" title="Reshape Data" href="df_reshape.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+Share: <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Pandas%20Snippets%20And%20Cheat%20Sheets%20Collection%20For%20Data%20Science%20https%3A%2F%2Fallthesnippets.com%2Fbrowse%2Findex.html"
+target="_blank">
+	<span class="fa fa-twitter-square fa-2x"></span>
+</a>
+
+ <a href="http://www.facebook.com/sharer.php?u=https://allthesnippets.com/browse/index.html" target="_blank" title="Facebook">
+ 	<span class="fa fa-facebook-square fa-2x"></span>
+ </a>
+
+<a href="http://www.linkedin.com/shareArticle?mini=true&url=https://allthesnippets.com/browse/index.html" target="_blank" title="Likedin">
+	<span class="fa fa-linkedin-square fa-2x"></span>
+</a>
+
+<a href="mailto:?subject=pandas%20cheat%20sheets&body=Pandas%20Snippets%20And%20Cheat%20Sheets%20Collection%20For%20Data%20Science%20https%3A%2F%2Fallthesnippets.com%2Fbrowse%2Findex.html" title="Share by Email" target=_blank>
+    <span class="fa fa-2x fa-envelope-square"></span>
+</a>
+
+<br />
+<a href="http://www.allthesnippets.com" class="icon icon-home">&nbsp;All-The-Snippets Home</a>
+<br />
+
+
+          
+            <a href="../index.html" class="icon icon-home"> Browse Snippets
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">All The Snippets:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../pandas.html">Pandas snippets</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="df_basics.html">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_axis.html">Axis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_examine.html">Examine Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_files.html">Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_tidy.html">Tidy Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_summarize.html">Summarize Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_selection.html">Select Data With .loc &amp; .iloc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_reshape.html">Reshape Data</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Group Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#group-by-one-column-one-column-aggregated-one-aggregation">Group by one column, one column aggregated, one aggregation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#group-by-two-columns-one-column-aggregated-one-aggregation">Group by two columns, one column aggregated, one aggregation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#group-by-two-columns-multiple-columns-aggregated-one-aggregation">Group by two columns, multiple columns aggregated, one aggregation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#group-by-one-column-one-column-aggregated-multiple-aggregations">Group by one column, one column aggregated, multiple aggregations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#group-by-one-column-multiple-columns-aggregated-multiple-aggregations">Group by one column, multiple columns aggregated, multiple aggregations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#group-by-named-aggregation-group-by-one-column-multiple-columns-aggregated-multiple-aggregations">Group by named aggregation: group by one column, multiple columns aggregated, multiple aggregations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Group by one column, one column aggregated, one aggregation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Group by two columns, one column aggregated, one aggregation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Group by two columns, multiple columns aggregated, one aggregation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Group by one column, one column aggregated, multiple aggregations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Group by one column, multiple columns aggregated, multiple aggregations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filter-within-a-groupby-filters-the-rows-on-a-property-of-the-group-they-belong-to">Filter (within a GroupBy), filters the rows on a property of the group they belong to</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transform-within-a-groupby-calculates-a-new-value-for-each-row-based-on-a-property-of-the-group">Transform (within a GroupBy), calculates a new value for each row based on a property of the group</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#center-the-data-by-subtracting-the-group-wise-mean">Center the data by subtracting the group-wise mean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#apply-within-a-groupby-applies-an-arbitrary-function-to-the-group-results">Apply (within a GroupBy), applies an arbitrary function to the group results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-top-n-rows-for-each-group-of-columns-in-a-sorted-dataframe">Get top n rows for each group of columns in a sorted dataframe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-bottom-n-rows-for-each-group-of-columns-in-a-sorted-dataframe">Get bottom n rows for each group of columns in a sorted dataframe</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="df_timeseries.html">Time Series Data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../python.html">Python snippets</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Browse Snippets</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../pandas.html">Pandas snippets</a> &raquo;</li>
+        
+      <li>Pandas snippets to group, aggregate, filter DataFrames</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/pandas/df_grouping.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div style="margin: auto; text-align: center;">
+  <a class="gumroad-button" href="https://gumroad.com/l/allthesnippets">Get Pandas Snippets and Cheats Collection eBook</a>
+</div><div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="group-data">
+<h1>Group Data</h1>
+<p>In pandas <strong>group by</strong> involves one or more of the following steps:</p>
+<ul class="simple">
+<li><strong>splitting</strong> the data into groups based on some criteria</li>
+<li><strong>applying</strong> a function to each group independently (i.e aggregation, transformation, filtration)</li>
+<li><strong>combining</strong> the results into a data structure (based on apply operation type)</li>
+</ul>
+<div class="section" id="group-by-one-column-one-column-aggregated-one-aggregation">
+<h2>Group by one column, one column aggregated, one aggregation</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># returns series because we aggregate one column</span>
+<span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;col_grp_1&#39;</span><span class="p">)[</span><span class="s1">&#39;col_agg_1&#39;</span><span class="p">]</span>\
+  <span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="group-by-two-columns-one-column-aggregated-one-aggregation">
+<h2>Group by two columns, one column aggregated, one aggregation</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># returns series because we aggregate one column</span>
+<span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;col_grp_1&#39;</span><span class="p">,</span> <span class="s1">&#39;col_grp_2&#39;</span><span class="p">])[</span><span class="s1">&#39;col_agg_1&#39;</span><span class="p">]</span>\
+  <span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="group-by-two-columns-multiple-columns-aggregated-one-aggregation">
+<h2>Group by two columns, multiple columns aggregated, one aggregation</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># returns data frame because we aggregate multiple columns, one aggregation</span>
+<span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;col_grp_1&#39;</span><span class="p">,</span> <span class="s1">&#39;col_grp_2&#39;</span><span class="p">])[</span><span class="s1">&#39;col_agg_1&#39;</span><span class="p">,</span> <span class="s1">&#39;col_agg_2&#39;</span><span class="p">]</span>\
+  <span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="group-by-one-column-one-column-aggregated-multiple-aggregations">
+<h2>Group by one column, one column aggregated, multiple aggregations</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># returns data frame because of multiple aggregations</span>
+<span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;col_grp_1&#39;</span><span class="p">)[</span><span class="s1">&#39;col_agg_1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="group-by-one-column-multiple-columns-aggregated-multiple-aggregations">
+<h2>Group by one column, multiple columns aggregated, multiple aggregations</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># returns data frame with hierarchical index in columns</span>
+<span class="n">df1</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;col_grp_1&#39;</span><span class="p">)[</span><span class="s1">&#39;col_agg_1&#39;</span><span class="p">,</span> <span class="s1">&#39;col_agg_2&#39;</span><span class="p">]</span>\
+        <span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">])</span>
+<span class="c1"># flatten the hierarchical index in columns</span>
+<span class="n">df1</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">col</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df1</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="group-by-named-aggregation-group-by-one-column-multiple-columns-aggregated-multiple-aggregations">
+<h2>Group by named aggregation: group by one column, multiple columns aggregated, multiple aggregations</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># from pandas version &gt;= 0.25.0</span>
+<span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;col_grp_1&#39;</span><span class="p">)</span>\
+  <span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">new_col1_name</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;col_agg_1&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">),</span>
+       <span class="n">new_col2_name</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;col_agg_2&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>Group by one column, one column aggregated, one aggregation</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+  <span class="n">kind</span>      <span class="n">breed</span>  <span class="n">height</span>  <span class="n">weight</span>
+<span class="mi">0</span>  <span class="n">cat</span>    <span class="n">siamese</span>     <span class="mf">9.1</span>     <span class="mf">7.9</span>
+<span class="mi">1</span>  <span class="n">dog</span>  <span class="n">chihuahua</span>     <span class="mf">6.0</span>     <span class="mf">7.5</span>
+<span class="mi">2</span>  <span class="n">cat</span>    <span class="n">persian</span>     <span class="mf">9.5</span>     <span class="mf">9.9</span>
+<span class="mi">3</span>  <span class="n">dog</span>   <span class="n">labrador</span>    <span class="mf">34.0</span>   <span class="mf">198.0</span>
+<span class="mi">4</span>  <span class="n">dog</span>  <span class="n">chihuahua</span>     <span class="mf">3.5</span>     <span class="mf">5.5</span>
+
+<span class="c1"># returns series because we aggregate one column</span>
+<span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;kind&#39;</span><span class="p">)[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+
+<span class="n">kind</span>
+<span class="n">cat</span>    <span class="mf">7.9</span>
+<span class="n">dog</span>    <span class="mf">5.5</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">weight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>Group by two columns, one column aggregated, one aggregation</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+  <span class="n">kind</span>      <span class="n">breed</span>  <span class="n">height</span>  <span class="n">weight</span>
+<span class="mi">0</span>  <span class="n">cat</span>    <span class="n">siamese</span>     <span class="mf">9.1</span>     <span class="mf">7.9</span>
+<span class="mi">1</span>  <span class="n">dog</span>  <span class="n">chihuahua</span>     <span class="mf">6.0</span>     <span class="mf">7.5</span>
+<span class="mi">2</span>  <span class="n">cat</span>    <span class="n">persian</span>     <span class="mf">9.5</span>     <span class="mf">9.9</span>
+<span class="mi">3</span>  <span class="n">dog</span>   <span class="n">labrador</span>    <span class="mf">34.0</span>   <span class="mf">198.0</span>
+<span class="mi">4</span>  <span class="n">dog</span>  <span class="n">chihuahua</span>     <span class="mf">3.5</span>     <span class="mf">5.5</span>
+
+<span class="c1"># returns series because we aggregate one column</span>
+<span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;kind&#39;</span><span class="p">,</span> <span class="s1">&#39;breed&#39;</span><span class="p">])[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+
+<span class="n">kind</span>  <span class="n">breed</span>
+<span class="n">cat</span>   <span class="n">persian</span>        <span class="mf">9.9</span>
+      <span class="n">siamese</span>        <span class="mf">7.9</span>
+<span class="n">dog</span>   <span class="n">chihuahua</span>      <span class="mf">5.5</span>
+      <span class="n">labrador</span>     <span class="mf">198.0</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">weight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>Group by two columns, multiple columns aggregated, one aggregation</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+  <span class="n">kind</span>      <span class="n">breed</span>  <span class="n">height</span>  <span class="n">weight</span>
+<span class="mi">0</span>  <span class="n">cat</span>    <span class="n">siamese</span>     <span class="mf">9.1</span>     <span class="mf">7.9</span>
+<span class="mi">1</span>  <span class="n">dog</span>  <span class="n">chihuahua</span>     <span class="mf">6.0</span>     <span class="mf">7.5</span>
+<span class="mi">2</span>  <span class="n">cat</span>    <span class="n">persian</span>     <span class="mf">9.5</span>     <span class="mf">9.9</span>
+<span class="mi">3</span>  <span class="n">dog</span>   <span class="n">labrador</span>    <span class="mf">34.0</span>   <span class="mf">198.0</span>
+<span class="mi">4</span>  <span class="n">dog</span>  <span class="n">chihuahua</span>     <span class="mf">3.5</span>     <span class="mf">5.5</span>
+
+<span class="c1"># returns data frame because we aggregate multiple columns, one aggregation</span>
+<span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;kind&#39;</span><span class="p">,</span> <span class="s1">&#39;breed&#39;</span><span class="p">])[</span><span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+
+                <span class="n">height</span>  <span class="n">weight</span>
+<span class="n">kind</span> <span class="n">breed</span>
+<span class="n">cat</span>  <span class="n">persian</span>       <span class="mf">9.5</span>     <span class="mf">9.9</span>
+     <span class="n">siamese</span>       <span class="mf">9.1</span>     <span class="mf">7.9</span>
+<span class="n">dog</span>  <span class="n">chihuahua</span>     <span class="mf">3.5</span>     <span class="mf">5.5</span>
+     <span class="n">labrador</span>     <span class="mf">34.0</span>   <span class="mf">198.0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>Group by one column, one column aggregated, multiple aggregations</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+  <span class="n">kind</span>      <span class="n">breed</span>  <span class="n">height</span>  <span class="n">weight</span>
+<span class="mi">0</span>  <span class="n">cat</span>    <span class="n">siamese</span>     <span class="mf">9.1</span>     <span class="mf">7.9</span>
+<span class="mi">1</span>  <span class="n">dog</span>  <span class="n">chihuahua</span>     <span class="mf">6.0</span>     <span class="mf">7.5</span>
+<span class="mi">2</span>  <span class="n">cat</span>    <span class="n">persian</span>     <span class="mf">9.5</span>     <span class="mf">9.9</span>
+<span class="mi">3</span>  <span class="n">dog</span>   <span class="n">labrador</span>    <span class="mf">34.0</span>   <span class="mf">198.0</span>
+<span class="mi">4</span>  <span class="n">dog</span>  <span class="n">chihuahua</span>     <span class="mf">3.5</span>     <span class="mf">5.5</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;kind&#39;</span><span class="p">)[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">])</span>
+
+<span class="c1"># returns data frame because of multiple aggregations</span>
+      <span class="nb">min</span>    <span class="nb">max</span>       <span class="n">mean</span>
+<span class="n">kind</span>
+<span class="n">cat</span>   <span class="mf">7.9</span>    <span class="mf">9.9</span>   <span class="mf">8.900000</span>
+<span class="n">dog</span>   <span class="mf">5.5</span>  <span class="mf">198.0</span>  <span class="mf">70.333333</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>Group by one column, multiple columns aggregated, multiple aggregations</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+  <span class="n">kind</span>      <span class="n">breed</span>  <span class="n">height</span>  <span class="n">weight</span>
+<span class="mi">0</span>  <span class="n">cat</span>    <span class="n">siamese</span>     <span class="mf">9.1</span>     <span class="mf">7.9</span>
+<span class="mi">1</span>  <span class="n">dog</span>  <span class="n">chihuahua</span>     <span class="mf">6.0</span>     <span class="mf">7.5</span>
+<span class="mi">2</span>  <span class="n">cat</span>    <span class="n">persian</span>     <span class="mf">9.5</span>     <span class="mf">9.9</span>
+<span class="mi">3</span>  <span class="n">dog</span>   <span class="n">labrador</span>    <span class="mf">34.0</span>   <span class="mf">198.0</span>
+<span class="mi">4</span>  <span class="n">dog</span>  <span class="n">chihuahua</span>     <span class="mf">3.5</span>     <span class="mf">5.5</span>
+
+<span class="c1"># returns data frame with hierarchical index in columns</span>
+<span class="n">df1</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;kind&#39;</span><span class="p">)[</span><span class="s1">&#39;weight&#39;</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">]</span>\
+        <span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">])</span>
+
+<span class="c1"># flatten the hierarchical index in columns</span>
+<span class="n">df1</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">col</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df1</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df1</span><span class="p">)</span>
+
+      <span class="n">weight_min</span>  <span class="n">weight_max</span>  <span class="n">weight_count</span>  <span class="n">height_min</span>  <span class="n">height_max</span>  <span class="n">height_count</span>
+<span class="n">kind</span>
+<span class="n">cat</span>          <span class="mf">7.9</span>         <span class="mf">9.9</span>             <span class="mi">2</span>         <span class="mf">9.1</span>         <span class="mf">9.5</span>             <span class="mi">2</span>
+<span class="n">dog</span>          <span class="mf">5.5</span>       <span class="mf">198.0</span>             <span class="mi">3</span>         <span class="mf">3.5</span>        <span class="mf">34.0</span>             <span class="mi">3</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="filter-within-a-groupby-filters-the-rows-on-a-property-of-the-group-they-belong-to">
+<h2>Filter (within a GroupBy), filters the rows on a property of the group they belong to</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># will return a subset DataFrame of rows belonging to the groups satisfying condition</span>
+<span class="n">df1</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;col_grp&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;col&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="transform-within-a-groupby-calculates-a-new-value-for-each-row-based-on-a-property-of-the-group">
+<h2>Transform (within a GroupBy), calculates a new value for each row based on a property of the group</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;grp_mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;col_grp&#39;</span><span class="p">)[</span><span class="s1">&#39;col&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="center-the-data-by-subtracting-the-group-wise-mean">
+<h2>Center the data by subtracting the group-wise mean</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># will return a new DataFrame with same size as the original</span>
+<span class="n">df_new</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;col_grp&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="apply-within-a-groupby-applies-an-arbitrary-function-to-the-group-results">
+<h2>Apply (within a GroupBy), applies an arbitrary function to the group results</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_normalize</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="c1"># x is a DataFrame of group values</span>
+  <span class="n">x</span><span class="p">[</span><span class="s1">&#39;col1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;col1&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;col2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+  <span class="k">return</span> <span class="n">x</span>
+
+<span class="c1"># normalizes the first column by the sum of the second:</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;col_grp&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">func_normalize</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-top-n-rows-for-each-group-of-columns-in-a-sorted-dataframe">
+<h2>Get top n rows for each group of columns in a sorted dataframe</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># sort DataFrame first by some columns</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">&#39;col_x&#39;</span><span class="p">,</span><span class="s1">&#39;col_y&#39;</span><span class="p">])</span>
+<span class="n">df_top_5</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;col_x&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-bottom-n-rows-for-each-group-of-columns-in-a-sorted-dataframe">
+<h2>Get bottom n rows for each group of columns in a sorted dataframe</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># sort DataFrame first by some columns</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">&#39;col_x&#39;</span><span class="p">,</span><span class="s1">&#39;col_y&#39;</span><span class="p">])</span>
+<span class="n">df_bottom_5</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;col_x&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="df_timeseries.html" class="btn btn-neutral float-right" title="Time Series Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="df_reshape.html" class="btn btn-neutral" title="Reshape Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019-24, allthesnippets.com. Last updated 2024-03-12.
+
+    </p>
+  </div>
+    <p style="margin-left: 190px;">
+    	<a href="https://www.allthesnippets.com/updates.html">What was updated?</a>
+    </p>
+     
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-130165634-1"></script>
+        <script type="text/javascript" src="../_static/js/google_analytics_tracker.js"></script>
+        <script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

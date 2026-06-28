@@ -1,0 +1,584 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta content="Reshape pandas DataFrame combining together rows and columns" name="description" />
+<meta content="pandas,concat,append,merge,merge_asof,pivot_table,melt,cheat sheet" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pandas snippets to reshape DataFrames by combining together rows and columns</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/snippets-style.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Group Data" href="df_grouping.html" />
+    <link rel="prev" title="Select Data With .loc &amp; .iloc" href="df_selection.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+Share: <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Pandas%20Snippets%20And%20Cheat%20Sheets%20Collection%20For%20Data%20Science%20https%3A%2F%2Fallthesnippets.com%2Fbrowse%2Findex.html"
+target="_blank">
+	<span class="fa fa-twitter-square fa-2x"></span>
+</a>
+
+ <a href="http://www.facebook.com/sharer.php?u=https://allthesnippets.com/browse/index.html" target="_blank" title="Facebook">
+ 	<span class="fa fa-facebook-square fa-2x"></span>
+ </a>
+
+<a href="http://www.linkedin.com/shareArticle?mini=true&url=https://allthesnippets.com/browse/index.html" target="_blank" title="Likedin">
+	<span class="fa fa-linkedin-square fa-2x"></span>
+</a>
+
+<a href="mailto:?subject=pandas%20cheat%20sheets&body=Pandas%20Snippets%20And%20Cheat%20Sheets%20Collection%20For%20Data%20Science%20https%3A%2F%2Fallthesnippets.com%2Fbrowse%2Findex.html" title="Share by Email" target=_blank>
+    <span class="fa fa-2x fa-envelope-square"></span>
+</a>
+
+<br />
+<a href="http://www.allthesnippets.com" class="icon icon-home">&nbsp;All-The-Snippets Home</a>
+<br />
+
+
+          
+            <a href="../index.html" class="icon icon-home"> Browse Snippets
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">All The Snippets:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../pandas.html">Pandas snippets</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="df_basics.html">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_axis.html">Axis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_examine.html">Examine Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_files.html">Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_tidy.html">Tidy Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_summarize.html">Summarize Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_selection.html">Select Data With .loc &amp; .iloc</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Reshape Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#concatenate-two-dataframes-together-rows-of-df1-followed-by-rows-of-df2">Concatenate two DataFrames together, rows of df1 followed by rows of df2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#concatenate-two-dataframes-together-df2-to-the-right-side-of-df1">Concatenate two DataFrames together, df2 to the right side of df1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#concatenate-multiple-dataframes-together-appending-rows-horizontally">Concatenate multiple DataFrames together, appending rows horizontally</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#append-a-single-row-to-a-dataframe-by-passing-a-series">Append a single row to a DataFrame by passing a Series</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Append a single row to a DataFrame by passing a Series</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#append-a-single-row-to-a-dataframe-by-passing-a-dict">Append a single row to a DataFrame by passing a dict</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Append a single row to a DataFrame by passing a dict</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#inner-join-two-dataframes-on-common-key-column">Inner Join two DataFrames on common key column</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#left-join-two-dataframes">Left Join two DataFrames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#right-join-two-dataframes">Right Join two DataFrames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#full-outer-join-two-dataframes-on-common-key-column">Full Outer Join two DataFrames on common key column</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#inner-join-two-dataframes-on-index">Inner Join two DataFrames on index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#join-two-dataframes-on-nearest-key-asof-merge">Join two DataFrames on nearest key (asof merge)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Join two DataFrames on nearest key (asof merge)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transpose-data-frame-rows-become-columns-columns-become-rows">Transpose data frame (rows become columns, columns become rows)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pivot-rows-to-columns-long-format-to-wide-one-value">Pivot rows to columns (long format to wide), one value</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pivot-rows-to-columns-long-format-to-wide-multiple-values">Pivot rows to columns (long format to wide), multiple values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pivot-table-with-totals">Pivot table with totals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#melt-columns-to-rows-wide-format-to-long">Melt columns to rows (wide format to long)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#melt-selected-columns-to-rows-wide-format-to-long">Melt selected columns to rows (wide format to long)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="df_grouping.html">Group Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_timeseries.html">Time Series Data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../python.html">Python snippets</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Browse Snippets</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../pandas.html">Pandas snippets</a> &raquo;</li>
+        
+      <li>Pandas snippets to reshape DataFrames by combining together rows and columns</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/pandas/df_reshape.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div style="margin: auto; text-align: center;">
+  <a class="gumroad-button" href="https://gumroad.com/l/allthesnippets">Get Pandas Snippets and Cheats Collection eBook</a>
+</div><div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="reshape-data">
+<h1>Reshape Data</h1>
+<p>Common functions to reshape pandas DataFrames are: concat, append, merge, merge_asof, transpose.
+They are used to combine together rows and columns or bring the dataset to its tidy (long) form.</p>
+<div class="section" id="concatenate-two-dataframes-together-rows-of-df1-followed-by-rows-of-df2">
+<h2>Concatenate two DataFrames together, rows of df1 followed by rows of df2</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="concatenate-two-dataframes-together-df2-to-the-right-side-of-df1">
+<h2>Concatenate two DataFrames together, df2 to the right side of df1</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="concatenate-multiple-dataframes-together-appending-rows-horizontally">
+<h2>Concatenate multiple DataFrames together, appending rows horizontally</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">frames</span> <span class="o">=</span> <span class="p">[</span><span class="n">process_input_file</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span> <span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">frames</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="append-a-single-row-to-a-dataframe-by-passing-a-series">
+<h2>Append a single row to a DataFrame by passing a Series</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_new</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>Append a single row to a DataFrame by passing a Series</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;Alex&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Clarke&#39;</span><span class="p">,</span> <span class="mi">13</span><span class="p">]]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+     <span class="n">Name</span>  <span class="n">Age</span>
+<span class="mi">0</span>    <span class="n">Alex</span>   <span class="mi">10</span>
+<span class="mi">1</span>     <span class="n">Bob</span>   <span class="mi">12</span>
+<span class="mi">2</span>  <span class="n">Clarke</span>   <span class="mi">13</span>
+
+<span class="n">s1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;X0&#39;</span><span class="p">,</span> <span class="s1">&#39;100&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+<span class="n">Name</span>    <span class="n">X0</span>
+<span class="n">Age</span>     <span class="mi">100</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="nb">object</span>
+
+<span class="n">df_new</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">df_new</span><span class="p">)</span>
+     <span class="n">Name</span> <span class="n">Age</span>
+<span class="mi">0</span>    <span class="n">Alex</span>  <span class="mi">10</span>
+<span class="mi">1</span>     <span class="n">Bob</span>  <span class="mi">12</span>
+<span class="mi">2</span>  <span class="n">Clarke</span>  <span class="mi">13</span>
+<span class="mi">3</span>      <span class="n">X0</span>  <span class="mi">100</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="append-a-single-row-to-a-dataframe-by-passing-a-dict">
+<h2>Append a single row to a DataFrame by passing a dict</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_new</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dict1</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>Append a single row to a DataFrame by passing a dict</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;Alex&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Clarke&#39;</span><span class="p">,</span> <span class="mi">13</span><span class="p">]]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+     <span class="n">Name</span>  <span class="n">Age</span>
+<span class="mi">0</span>    <span class="n">Alex</span>   <span class="mi">10</span>
+<span class="mi">1</span>     <span class="n">Bob</span>   <span class="mi">12</span>
+<span class="mi">2</span>  <span class="n">Clarke</span>   <span class="mi">13</span>
+
+<span class="n">dicts</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;X1&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">},</span>
+         <span class="p">{</span><span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;X2&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">}]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">dicts</span>
+<span class="p">[{</span><span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;X1&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;X2&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">}]</span>
+
+<span class="n">df_new</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dicts</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df_new</span>
+     <span class="n">Name</span>  <span class="n">Age</span>
+<span class="mi">0</span>    <span class="n">Alex</span>   <span class="mi">10</span>
+<span class="mi">1</span>     <span class="n">Bob</span>   <span class="mi">12</span>
+<span class="mi">2</span>  <span class="n">Clarke</span>   <span class="mi">13</span>
+<span class="mi">3</span>      <span class="n">X1</span>  <span class="mi">100</span>
+<span class="mi">4</span>      <span class="n">X2</span>  <span class="mi">200</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="inner-join-two-dataframes-on-common-key-column">
+<h2>Inner Join two DataFrames on common key column</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use intersection of keys from both frames</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_left</span> <span class="n">df_right</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;column_id&#39;</span><span class="p">)</span>
+
+<span class="c1"># identical with</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_left</span> <span class="n">df_right</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;column_id&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;column_id&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="left-join-two-dataframes">
+<h2>Left Join two DataFrames</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use keys from left frame only</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_left</span> <span class="n">df_right</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;column_x&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;column_y&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="right-join-two-dataframes">
+<h2>Right Join two DataFrames</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use keys from right frame only</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_left</span> <span class="n">df_right</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;column_x&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;column_y&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="full-outer-join-two-dataframes-on-common-key-column">
+<h2>Full Outer Join two DataFrames on common key column</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use union of keys from both frames</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_left</span> <span class="n">df_right</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;column_id&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="inner-join-two-dataframes-on-index">
+<h2>Inner Join two DataFrames on index</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_left</span> <span class="n">df_right</span><span class="p">,</span> <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="join-two-dataframes-on-nearest-key-asof-merge">
+<h2>Join two DataFrames on nearest key (asof merge)</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is similar to a left-join except that we match on nearest key rather than equal keys.</span>
+<span class="c1"># Both DataFrames must be sorted by the key.</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge_asof</span><span class="p">(</span><span class="n">df_left</span> <span class="n">df_right</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;column_id&#39;</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s1">&#39;column_to_match&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>Join two DataFrames on nearest key (asof merge)</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is similar to a left-join except that we match on nearest key rather than equal keys.</span>
+<span class="c1"># Both DataFrames must be sorted by the key.</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">trades</span>
+                     <span class="n">time</span> <span class="n">ticker</span>   <span class="n">price</span>  <span class="n">quantity</span>
+<span class="mi">0</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">00.023</span>   <span class="n">MSFT</span>   <span class="mf">51.95</span>        <span class="mi">75</span>
+<span class="mi">1</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">00.038</span>   <span class="n">MSFT</span>   <span class="mf">51.95</span>       <span class="mi">155</span>
+<span class="mi">2</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">00.048</span>   <span class="n">GOOG</span>  <span class="mf">720.77</span>       <span class="mi">100</span>
+<span class="mi">3</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">00.048</span>   <span class="n">GOOG</span>  <span class="mf">720.92</span>       <span class="mi">100</span>
+<span class="mi">4</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">00.048</span>   <span class="n">AAPL</span>   <span class="mf">98.00</span>       <span class="mi">100</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">quotes</span>
+                     <span class="n">time</span> <span class="n">ticker</span>     <span class="n">bid</span>     <span class="n">ask</span>
+<span class="mi">0</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">00.023</span>   <span class="n">GOOG</span>  <span class="mf">720.50</span>  <span class="mf">720.93</span>
+<span class="mi">1</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">00.023</span>   <span class="n">MSFT</span>   <span class="mf">51.95</span>   <span class="mf">51.96</span>
+<span class="mi">2</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">00.030</span>   <span class="n">MSFT</span>   <span class="mf">51.97</span>   <span class="mf">51.98</span>
+<span class="mi">3</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">00.041</span>   <span class="n">MSFT</span>   <span class="mf">51.99</span>   <span class="mf">52.00</span>
+<span class="mi">4</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">00.048</span>   <span class="n">GOOG</span>  <span class="mf">720.50</span>  <span class="mf">720.93</span>
+<span class="mi">5</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">00.049</span>   <span class="n">AAPL</span>   <span class="mf">97.99</span>   <span class="mf">98.01</span>
+<span class="mi">6</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">00.072</span>   <span class="n">GOOG</span>  <span class="mf">720.50</span>  <span class="mf">720.88</span>
+<span class="mi">7</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">00.075</span>   <span class="n">MSFT</span>   <span class="mf">52.01</span>   <span class="mf">52.03</span>
+
+<span class="n">df_merge_asof</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge_asof</span><span class="p">(</span><span class="n">trades</span><span class="p">,</span> <span class="n">quotes</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s1">&#39;ticker&#39;</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df_merge_asof</span>
+                     <span class="n">time</span> <span class="n">ticker</span>   <span class="n">price</span>  <span class="n">quantity</span>     <span class="n">bid</span>     <span class="n">ask</span>
+<span class="mi">0</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">00.023</span>   <span class="n">MSFT</span>   <span class="mf">51.95</span>        <span class="mi">75</span>   <span class="mf">51.95</span>   <span class="mf">51.96</span>
+<span class="mi">1</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">00.038</span>   <span class="n">MSFT</span>   <span class="mf">51.95</span>       <span class="mi">155</span>   <span class="mf">51.97</span>   <span class="mf">51.98</span>
+<span class="mi">2</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">00.048</span>   <span class="n">GOOG</span>  <span class="mf">720.77</span>       <span class="mi">100</span>  <span class="mf">720.50</span>  <span class="mf">720.93</span>
+<span class="mi">3</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">00.048</span>   <span class="n">GOOG</span>  <span class="mf">720.92</span>       <span class="mi">100</span>  <span class="mf">720.50</span>  <span class="mf">720.93</span>
+<span class="mi">4</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">00.048</span>   <span class="n">AAPL</span>   <span class="mf">98.00</span>       <span class="mi">100</span>     <span class="n">NaN</span>     <span class="n">NaN</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="transpose-data-frame-rows-become-columns-columns-become-rows">
+<h2>Transpose data frame (rows become columns, columns become rows)</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pivot-rows-to-columns-long-format-to-wide-one-value">
+<h2>Pivot rows to columns (long format to wide), one value</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+         <span class="n">date</span> <span class="n">ticker</span>  <span class="nb">open</span>  <span class="n">close</span>
+<span class="mi">0</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">01</span>   <span class="n">AAPL</span>   <span class="mi">100</span>     <span class="mi">90</span>
+<span class="mi">1</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">02</span>   <span class="n">AAPL</span>   <span class="mi">110</span>    <span class="mi">120</span>
+<span class="mi">2</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">01</span>    <span class="n">IBM</span>   <span class="mi">200</span>    <span class="mi">205</span>
+<span class="mi">3</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">02</span>    <span class="n">IBM</span>   <span class="mi">205</span>    <span class="mi">210</span>
+
+<span class="c1"># pivot distinct values of column ticker as new columns</span>
+<span class="n">df1</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;ticker&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;close&#39;</span><span class="p">)</span>
+<span class="c1"># remove columns name</span>
+<span class="n">df1</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="c1"># bring `date` as column</span>
+<span class="n">df1</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">df1</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df1</span>
+         <span class="n">date</span>  <span class="n">AAPL</span>  <span class="n">IBM</span>
+<span class="mi">0</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">01</span>    <span class="mi">90</span>  <span class="mi">205</span>
+<span class="mi">1</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">02</span>   <span class="mi">120</span>  <span class="mi">210</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pivot-rows-to-columns-long-format-to-wide-multiple-values">
+<h2>Pivot rows to columns (long format to wide), multiple values</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+         <span class="n">date</span> <span class="n">ticker</span>  <span class="nb">open</span>  <span class="n">close</span>
+<span class="mi">0</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">01</span>   <span class="n">AAPL</span>   <span class="mi">100</span>     <span class="mi">90</span>
+<span class="mi">1</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">02</span>   <span class="n">AAPL</span>   <span class="mi">110</span>    <span class="mi">120</span>
+<span class="mi">2</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">01</span>    <span class="n">IBM</span>   <span class="mi">200</span>    <span class="mi">205</span>
+<span class="mi">3</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">02</span>    <span class="n">IBM</span>   <span class="mi">205</span>    <span class="mi">210</span>
+
+<span class="n">df1</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;ticker&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="s1">&#39;close&#39;</span><span class="p">])</span>
+<span class="c1"># flatten columns multi-index</span>
+<span class="n">df1</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">col</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df1</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
+<span class="c1"># bring `date` as column</span>
+<span class="n">df1</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df1</span>
+         <span class="n">date</span>  <span class="n">close_AAPL</span>  <span class="n">close_IBM</span>  <span class="n">open_AAPL</span>  <span class="n">open_IBM</span>
+<span class="mi">0</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">01</span>          <span class="mi">90</span>        <span class="mi">205</span>        <span class="mi">100</span>       <span class="mi">200</span>
+<span class="mi">1</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">02</span>         <span class="mi">120</span>        <span class="mi">210</span>        <span class="mi">110</span>       <span class="mi">205</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pivot-table-with-totals">
+<h2>Pivot table with totals</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+  <span class="n">Province</span>       <span class="n">City</span>  <span class="n">Sales</span>
+<span class="mi">0</span>       <span class="n">ON</span>    <span class="n">Toronto</span>     <span class="mi">13</span>
+<span class="mi">1</span>       <span class="n">ON</span>    <span class="n">Toronto</span>      <span class="mi">1</span>
+<span class="mi">2</span>       <span class="n">QC</span>   <span class="n">Montreal</span>      <span class="mi">6</span>
+<span class="mi">3</span>       <span class="n">BC</span>  <span class="n">Vancouver</span>     <span class="mi">16</span>
+<span class="mi">4</span>       <span class="n">AL</span>    <span class="n">Calgary</span>      <span class="mi">8</span>
+<span class="mi">5</span>       <span class="n">AL</span>   <span class="n">Edmonton</span>      <span class="mi">4</span>
+<span class="mi">6</span>       <span class="n">MN</span>   <span class="n">Winnipeg</span>      <span class="mi">3</span>
+<span class="mi">7</span>       <span class="n">ON</span>    <span class="n">Windsor</span>      <span class="mi">1</span>
+
+<span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Province&#39;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;City&#39;</span><span class="p">],</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Sales&#39;</span><span class="p">],</span>
+                     <span class="n">aggfunc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">margins</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># `index` - distinct values of cols provided will go on rows</span>
+<span class="c1"># `columns` - distinct values of cols provided will go on columns</span>
+<span class="c1"># `values` = data cells</span>
+<span class="c1"># `aggfunc` = aggregation function(s)</span>
+<span class="c1"># `margins=True` = display grand totals</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df1</span>
+           <span class="n">Sales</span>
+<span class="n">City</span>     <span class="n">Calgary</span> <span class="n">Edmonton</span> <span class="n">Montreal</span> <span class="n">Toronto</span> <span class="n">Vancouver</span> <span class="n">Windsor</span> <span class="n">Winnipeg</span> <span class="n">All</span>
+<span class="n">Province</span>
+<span class="n">AL</span>             <span class="mi">8</span>        <span class="mi">4</span>        <span class="mi">0</span>       <span class="mi">0</span>         <span class="mi">0</span>       <span class="mi">0</span>        <span class="mi">0</span>  <span class="mi">12</span>
+<span class="n">BC</span>             <span class="mi">0</span>        <span class="mi">0</span>        <span class="mi">0</span>       <span class="mi">0</span>        <span class="mi">16</span>       <span class="mi">0</span>        <span class="mi">0</span>  <span class="mi">16</span>
+<span class="n">MN</span>             <span class="mi">0</span>        <span class="mi">0</span>        <span class="mi">0</span>       <span class="mi">0</span>         <span class="mi">0</span>       <span class="mi">0</span>        <span class="mi">3</span>   <span class="mi">3</span>
+<span class="n">ON</span>             <span class="mi">0</span>        <span class="mi">0</span>        <span class="mi">0</span>      <span class="mi">14</span>         <span class="mi">0</span>       <span class="mi">1</span>        <span class="mi">0</span>  <span class="mi">15</span>
+<span class="n">QC</span>             <span class="mi">0</span>        <span class="mi">0</span>        <span class="mi">6</span>       <span class="mi">0</span>         <span class="mi">0</span>       <span class="mi">0</span>        <span class="mi">0</span>   <span class="mi">6</span>
+<span class="n">All</span>            <span class="mi">8</span>        <span class="mi">4</span>        <span class="mi">6</span>      <span class="mi">14</span>        <span class="mi">16</span>       <span class="mi">1</span>        <span class="mi">3</span>  <span class="mi">52</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="melt-columns-to-rows-wide-format-to-long">
+<h2>Melt columns to rows (wide format to long)</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+         <span class="n">date</span>  <span class="n">AAPL</span>  <span class="n">IBM</span>
+<span class="mi">0</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">01</span>    <span class="mi">90</span>  <span class="mi">205</span>
+<span class="mi">1</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">02</span>   <span class="mi">120</span>  <span class="mi">210</span>
+
+<span class="n">df1</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="n">var_name</span><span class="o">=</span><span class="s1">&#39;ticker&#39;</span><span class="p">,</span> <span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;close&#39;</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df1</span>
+         <span class="n">date</span> <span class="n">ticker</span>  <span class="n">close</span>
+<span class="mi">0</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">01</span>   <span class="n">AAPL</span>     <span class="mi">90</span>
+<span class="mi">1</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">02</span>   <span class="n">AAPL</span>    <span class="mi">120</span>
+<span class="mi">2</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">01</span>    <span class="n">IBM</span>    <span class="mi">205</span>
+<span class="mi">3</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">02</span>    <span class="n">IBM</span>    <span class="mi">210</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="melt-selected-columns-to-rows-wide-format-to-long">
+<h2>Melt selected columns to rows (wide format to long)</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+         <span class="n">date</span>  <span class="n">AAPL</span>  <span class="n">IBM</span>  <span class="n">MSFT</span>  <span class="n">TSLA</span>
+<span class="mi">0</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">01</span>    <span class="mi">90</span>  <span class="mi">205</span>   <span class="mi">100</span>   <span class="mi">200</span>
+<span class="mi">1</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">02</span>   <span class="mi">120</span>  <span class="mi">210</span>   <span class="mi">110</span>   <span class="mi">205</span>
+
+<span class="n">df1</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span>
+              <span class="n">var_name</span><span class="o">=</span><span class="s1">&#39;ticker&#39;</span><span class="p">,</span>
+              <span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;close&#39;</span><span class="p">,</span>
+              <span class="n">value_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;TSLA&#39;</span><span class="p">])</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df1</span>
+         <span class="n">date</span> <span class="n">ticker</span>  <span class="n">close</span>
+<span class="mi">0</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">01</span>   <span class="n">AAPL</span>     <span class="mi">90</span>
+<span class="mi">1</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">02</span>   <span class="n">AAPL</span>    <span class="mi">120</span>
+<span class="mi">2</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">01</span>   <span class="n">TSLA</span>    <span class="mi">200</span>
+<span class="mi">3</span>  <span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">02</span>   <span class="n">TSLA</span>    <span class="mi">205</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="df_grouping.html" class="btn btn-neutral float-right" title="Group Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="df_selection.html" class="btn btn-neutral" title="Select Data With .loc &amp; .iloc" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019-24, allthesnippets.com. Last updated 2024-03-12.
+
+    </p>
+  </div>
+    <p style="margin-left: 190px;">
+    	<a href="https://www.allthesnippets.com/updates.html">What was updated?</a>
+    </p>
+     
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-130165634-1"></script>
+        <script type="text/javascript" src="../_static/js/google_analytics_tracker.js"></script>
+        <script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

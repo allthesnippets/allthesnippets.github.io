@@ -1,0 +1,389 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta content="Python map, filter, reduce functions." name="description" />
+<meta content="python,python reference,cheat sheet,lambda,function,expression" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Python snippets: map(), filter(), reduce() functions</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/snippets-style.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Lambdas" href="python_lambdas.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+Share: <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Pandas%20Snippets%20And%20Cheat%20Sheets%20Collection%20For%20Data%20Science%20https%3A%2F%2Fallthesnippets.com%2Fbrowse%2Findex.html"
+target="_blank">
+	<span class="fa fa-twitter-square fa-2x"></span>
+</a>
+
+ <a href="http://www.facebook.com/sharer.php?u=https://allthesnippets.com/browse/index.html" target="_blank" title="Facebook">
+ 	<span class="fa fa-facebook-square fa-2x"></span>
+ </a>
+
+<a href="http://www.linkedin.com/shareArticle?mini=true&url=https://allthesnippets.com/browse/index.html" target="_blank" title="Likedin">
+	<span class="fa fa-linkedin-square fa-2x"></span>
+</a>
+
+<a href="mailto:?subject=pandas%20cheat%20sheets&body=Pandas%20Snippets%20And%20Cheat%20Sheets%20Collection%20For%20Data%20Science%20https%3A%2F%2Fallthesnippets.com%2Fbrowse%2Findex.html" title="Share by Email" target=_blank>
+    <span class="fa fa-2x fa-envelope-square"></span>
+</a>
+
+<br />
+<a href="http://www.allthesnippets.com" class="icon icon-home">&nbsp;All-The-Snippets Home</a>
+<br />
+
+
+          
+            <a href="../index.html" class="icon icon-home"> Browse Snippets
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">All The Snippets:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../pandas.html">Pandas snippets</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../python.html">Python snippets</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="python_basics.html">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_strings.html">Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_lists.html">Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_dictionaries.html">Dictionaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_lambdas.html">Lambdas</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Map, Filter, Reduce</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#map-syntax">map syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#map-compute-squares-values-of-a-list">map - Compute squares values of a list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#map-convert-a-list-with-strings-to-uppercase">map - Convert a list with strings to uppercase</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#map-element-wise-addition-of-2-lists">map - Element-wise addition of 2 lists</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filter-syntax">filter syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filter-get-list-of-even-numbers-from-a-range">filter - Get list of even numbers from a range</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filter-get-only-strings-with-a-length-of-3-characters-from-a-list">filter - Get only strings with a length of 3 characters from a list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reduce-syntax">reduce syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reduce-sum-up-elements-of-a-list">reduce - Sum up elements of a list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reduce-sum-up-elements-of-a-list-with-an-initial-value">reduce - Sum up elements of a list (with an initial value)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Browse Snippets</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../python.html">Python snippets</a> &raquo;</li>
+        
+      <li>Python snippets: map(), filter(), reduce() functions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/python/python_map_filter_reduce.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div style="margin: auto; text-align: center;">
+  <a class="gumroad-button" href="https://gumroad.com/l/allthesnippets">Get Pandas Snippets and Cheats Collection eBook</a>
+</div><div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="map-filter-reduce">
+<h1>Map, Filter, Reduce</h1>
+<p>map(), filter(), reduce() functions allow to write simpler, shorter code, without the explicit loop, applying a function across a number of iterables:</p>
+<ul class="simple">
+<li><strong>map()</strong> apply a function to each element of a given iterable(s).</li>
+<li><strong>filter()</strong> similar with map() but creates a list of elements for which the function returns true.</li>
+<li><strong>reduce()</strong> applies a function of two arguments cumulatively to the elements of an iterable, optionally starting with an initial argument.</li>
+</ul>
+<div class="section" id="map-syntax">
+<h2>map syntax</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># returns iterable</span>
+<span class="nb">map</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">iterables</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="map-compute-squares-values-of-a-list">
+<h2>map - Compute squares values of a list</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">lst_squared</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">lst</span><span class="p">))</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">lst_squared</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="map-convert-a-list-with-strings-to-uppercase">
+<h2>map - Convert a list with strings to uppercase</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;marry&#39;</span><span class="p">,</span> <span class="s1">&#39;adolf&#39;</span><span class="p">,</span> <span class="s1">&#39;bob&#39;</span><span class="p">]</span>
+<span class="n">lst_upcase</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">lst</span><span class="p">))</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">lst_upcase</span>
+<span class="p">[</span><span class="s1">&#39;MARRY&#39;</span><span class="p">,</span> <span class="s1">&#39;ADOLF&#39;</span><span class="p">,</span> <span class="s1">&#39;BOB&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="map-element-wise-addition-of-2-lists">
+<h2>map - Element-wise addition of 2 lists</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">lst2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">]</span>
+<span class="c1"># map can take multiple iterables</span>
+<span class="n">lst_add_up</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">,</span> <span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">))</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">lst_add_up</span>
+<span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">55</span><span class="p">]</span>
+
+<span class="c1"># similar with</span>
+
+<span class="c1"># using zip and list comprehension</span>
+<span class="n">lst_add_up</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="n">y</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">)]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">lst_add_up</span>
+<span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">55</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="filter-syntax">
+<h2>filter syntax</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># returns iterable</span>
+<span class="nb">filter</span><span class="p">(</span><span class="n">boolean_function</span><span class="p">,</span> <span class="n">iterable</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="filter-get-list-of-even-numbers-from-a-range">
+<h2>filter - Get list of even numbers from a range</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst_even</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">lst_even</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="filter-get-only-strings-with-a-length-of-3-characters-from-a-list">
+<h2>filter - Get only strings with a length of 3 characters from a list</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="s1">&#39;efdsaa&#39;</span><span class="p">,</span> <span class="s1">&#39;ftg&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">]</span>
+<span class="n">lst_len3</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="n">lst</span><span class="p">))</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">lst_len3</span>
+<span class="p">[</span><span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="s1">&#39;ftg&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reduce-syntax">
+<h2>reduce syntax</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reduce</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">iterable</span><span class="p">[,</span> <span class="n">initial</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reduce-sum-up-elements-of-a-list">
+<h2>reduce - Sum up elements of a list</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">reduce</span>
+
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="c1"># reduce calls will be: add(1,2), add(3,3), add(6,4)</span>
+<span class="n">val</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="n">lst</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">val</span>
+<span class="mi">10</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reduce-sum-up-elements-of-a-list-with-an-initial-value">
+<h2>reduce - Sum up elements of a list (with an initial value)</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">reduce</span>
+
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="c1"># reduce calls will be: add(100,1), add(101, 2), add(103, 3), add(106, 4)</span>
+<span class="n">val</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="n">lst</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">val</span>
+<span class="mi">110</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="python_lambdas.html" class="btn btn-neutral" title="Lambdas" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019-24, allthesnippets.com. Last updated 2024-03-12.
+
+    </p>
+  </div>
+    <p style="margin-left: 190px;">
+    	<a href="https://www.allthesnippets.com/updates.html">What was updated?</a>
+    </p>
+     
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-130165634-1"></script>
+        <script type="text/javascript" src="../_static/js/google_analytics_tracker.js"></script>
+        <script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

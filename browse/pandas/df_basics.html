@@ -1,0 +1,542 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta content="Create pandas DataFrame, add/drop rows, add/drop columns, rename columns, replace columns names." name="description" />
+<meta content="pandas,create,DataFrame,add,drop,columns,rows,index,cheat sheet" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pandas basics snippets to create DataFrame, add/drop/rename rows &amp; columns</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/snippets-style.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Axis" href="df_axis.html" />
+    <link rel="prev" title="Pandas snippets" href="../pandas.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+Share: <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Pandas%20Snippets%20And%20Cheat%20Sheets%20Collection%20For%20Data%20Science%20https%3A%2F%2Fallthesnippets.com%2Fbrowse%2Findex.html"
+target="_blank">
+	<span class="fa fa-twitter-square fa-2x"></span>
+</a>
+
+ <a href="http://www.facebook.com/sharer.php?u=https://allthesnippets.com/browse/index.html" target="_blank" title="Facebook">
+ 	<span class="fa fa-facebook-square fa-2x"></span>
+ </a>
+
+<a href="http://www.linkedin.com/shareArticle?mini=true&url=https://allthesnippets.com/browse/index.html" target="_blank" title="Likedin">
+	<span class="fa fa-linkedin-square fa-2x"></span>
+</a>
+
+<a href="mailto:?subject=pandas%20cheat%20sheets&body=Pandas%20Snippets%20And%20Cheat%20Sheets%20Collection%20For%20Data%20Science%20https%3A%2F%2Fallthesnippets.com%2Fbrowse%2Findex.html" title="Share by Email" target=_blank>
+    <span class="fa fa-2x fa-envelope-square"></span>
+</a>
+
+<br />
+<a href="http://www.allthesnippets.com" class="icon icon-home">&nbsp;All-The-Snippets Home</a>
+<br />
+
+
+          
+            <a href="../index.html" class="icon icon-home"> Browse Snippets
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">All The Snippets:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../pandas.html">Pandas snippets</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Basics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#import-the-pandas-library-and-aliasing-as-pd">Import the pandas library and aliasing as pd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-an-empty-dataframe">Create an empty DataFrame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-dataframe-from-list-of-lists-specify-values-for-each-row">Create a DataFrame from List of Lists. Specify values for each row</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-dataframe-from-a-dictionary-of-lists-specify-values-for-each-column">Create a DataFrame from a Dictionary of Lists. Specify values for each column</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-dataframe-with-index">Create a DataFrame with index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generate-a-random-dataframe">Generate a random DataFrame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generate-a-random-dataframe-with-date-index">Generate a random DataFrame with date index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-a-column-as-the-dataframe-index">Set a column as the dataframe index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reset-the-dataframe-index-to-the-default-integer-index">Reset the dataframe index to the default integer index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reset-the-dataframe-index-without-inserting-it-into-dataframe-columns">Reset the dataframe index without inserting it into dataframe columns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rename-several-dataframe-columns">Rename several DataFrame columns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#replace-all-column-names">Replace all column names</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lowercase-dataframe-columns-names">Lowercase DataFrame columns names</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#remove-drop-one-column">Remove/drop one column</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#remove-drop-several-columns">Remove/drop several columns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#remove-drop-rows-by-index">Remove/drop rows by index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#remove-drop-first-two-rows">Remove/drop first two rows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#remove-drop-last-two-rows">Remove/drop last two rows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#remove-drop-rows-by-names">Remove/drop rows by names</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-column-with-all-values-a-constant">Add column with all values a constant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-column-on-specific-position-as-second-column">Add column on specific position (as second column)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-column-based-on-values-of-other-columns">Add column based on values of other columns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-column-with-values-from-list">Add column with values from list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-new-column-based-on-values-of-other-column-and-where-condition">Add new column based on values of other column and where condition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-new-column-based-on-values-of-other-columns-and-where-condition">Add new column based on values of other columns and where condition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flatten-collapse-the-hierarchical-index-in-columns">Flatten/collapse the hierarchical index in columns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iterate-over-dataframe-rows-slow-operation">Iterate over DataFrame rows (slow operation)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="df_axis.html">Axis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_examine.html">Examine Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_files.html">Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_tidy.html">Tidy Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_summarize.html">Summarize Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_selection.html">Select Data With .loc &amp; .iloc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_reshape.html">Reshape Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_grouping.html">Group Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_timeseries.html">Time Series Data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../python.html">Python snippets</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Browse Snippets</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../pandas.html">Pandas snippets</a> &raquo;</li>
+        
+      <li>Pandas basics snippets to create DataFrame, add/drop/rename rows &amp; columns</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/pandas/df_basics.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div style="margin: auto; text-align: center;">
+  <a class="gumroad-button" href="https://gumroad.com/l/allthesnippets">Get Pandas Snippets and Cheats Collection eBook</a>
+</div><div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="basics">
+<h1>Basics</h1>
+<p>Basics pandas operations are: create DataFrame objects, add/drop rows, add/drop columns, rename columns, replace columns names, add/remove indexes.</p>
+<div class="section" id="import-the-pandas-library-and-aliasing-as-pd">
+<h2>Import the pandas library and aliasing as pd</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-an-empty-dataframe">
+<h2>Create an empty DataFrame</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-dataframe-from-list-of-lists-specify-values-for-each-row">
+<h2>Create a DataFrame from List of Lists. Specify values for each row</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;Alex&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Clarke&#39;</span><span class="p">,</span> <span class="mi">13</span><span class="p">]]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-dataframe-from-a-dictionary-of-lists-specify-values-for-each-column">
+<h2>Create a DataFrame from a Dictionary of Lists. Specify values for each column</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Tom&#39;</span><span class="p">,</span> <span class="s1">&#39;Jack&#39;</span><span class="p">,</span> <span class="s1">&#39;Steve&#39;</span><span class="p">,</span> <span class="s1">&#39;Ricky&#39;</span><span class="p">],</span> <span class="s1">&#39;Age&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">42</span><span class="p">]}</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-dataframe-with-index">
+<h2>Create a DataFrame with index</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;Alex&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Clarke&#39;</span><span class="p">,</span> <span class="mi">13</span><span class="p">]]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="generate-a-random-dataframe">
+<h2>Generate a random DataFrame</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="c1"># create a DataFrame with 50 rows and 5 columns</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="generate-a-random-dataframe-with-date-index">
+<h2>Generate a random DataFrame with date index</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="c1"># create a DataFrame with 50 rows and 5 columns</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="c1"># add row index as daily dates starting `2017-01-01`</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s1">&#39;2017-01-01&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-a-column-as-the-dataframe-index">
+<h2>Set a column as the dataframe index</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;column_x&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reset-the-dataframe-index-to-the-default-integer-index">
+<h2>Reset the dataframe index to the default integer index</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reset-the-dataframe-index-without-inserting-it-into-dataframe-columns">
+<h2>Reset the dataframe index without inserting it into dataframe columns</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rename-several-dataframe-columns">
+<h2>Rename several DataFrame columns</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;col1_old&#39;</span><span class="p">:</span> <span class="s1">&#39;col1_new&#39;</span><span class="p">,</span> <span class="s1">&#39;col2_old&#39;</span><span class="p">:</span> <span class="s1">&#39;col2_new&#39;</span><span class="p">})</span>
+<span class="c1"># or</span>
+<span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;col1_old&#39;</span><span class="p">:</span> <span class="s1">&#39;col1_new&#39;</span><span class="p">,</span> <span class="s1">&#39;col2_old&#39;</span><span class="p">:</span> <span class="s1">&#39;col2_new&#39;</span><span class="p">},</span>
+          <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="replace-all-column-names">
+<h2>Replace all column names</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">new_cols_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;column_x&#39;</span><span class="p">,</span> <span class="s1">&#39;column_y&#39;</span><span class="p">,</span> <span class="s1">&#39;column_z&#39;</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">new_cols_names</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="lowercase-dataframe-columns-names">
+<h2>Lowercase DataFrame columns names</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+<span class="c1"># or</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="remove-drop-one-column">
+<h2>Remove/drop one column</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;column_x&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="remove-drop-several-columns">
+<h2>Remove/drop several columns</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;column_x&#39;</span><span class="p">,</span> <span class="s1">&#39;column_y&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># or</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;column_x&#39;</span><span class="p">,</span> <span class="s1">&#39;column_y&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="remove-drop-rows-by-index">
+<h2>Remove/drop rows by index</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># drop rows 0 and 1</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="remove-drop-first-two-rows">
+<h2>Remove/drop first two rows</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="remove-drop-last-two-rows">
+<h2>Remove/drop last two rows</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="remove-drop-rows-by-names">
+<h2>Remove/drop rows by names</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;Alex&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Clarke&#39;</span><span class="p">,</span> <span class="mi">13</span><span class="p">]]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+     <span class="n">Name</span>  <span class="n">Age</span>
+<span class="n">a</span>    <span class="n">Alex</span>   <span class="mi">10</span>
+<span class="n">b</span>     <span class="n">Bob</span>   <span class="mi">12</span>
+<span class="n">c</span>  <span class="n">Clarke</span>   <span class="mi">13</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+   <span class="n">Name</span>  <span class="n">Age</span>
+<span class="n">a</span>  <span class="n">Alex</span>   <span class="mi">10</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-column-with-all-values-a-constant">
+<h2>Add column with all values a constant</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;column_new&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">7</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-column-on-specific-position-as-second-column">
+<h2>Add column on specific position (as second column)</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;column_new&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-column-based-on-values-of-other-columns">
+<h2>Add column based on values of other columns</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;column_new&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">column_x</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">column_y</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-column-with-values-from-list">
+<h2>Add column with values from list</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;Alex&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Marie&#39;</span><span class="p">,</span> <span class="mi">13</span><span class="p">]]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;column_new&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;boy&#39;</span><span class="p">,</span> <span class="s1">&#39;boy&#39;</span><span class="p">,</span> <span class="s1">&#39;girl&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="n">Name</span>  <span class="n">Age</span> <span class="n">column_new</span>
+<span class="mi">0</span>   <span class="n">Alex</span>   <span class="mi">10</span>        <span class="n">boy</span>
+<span class="mi">1</span>    <span class="n">Bob</span>   <span class="mi">12</span>        <span class="n">boy</span>
+<span class="mi">2</span>  <span class="n">Marie</span>   <span class="mi">13</span>       <span class="n">girl</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-new-column-based-on-values-of-other-column-and-where-condition">
+<h2>Add new column based on values of other column and where condition</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;colummn_new&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;yes&#39;</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;colummn_new&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;colummn_new&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;column_x&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">)</span>
+
+<span class="c1"># equivalent with and more intuitive</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;colummn_new&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;column_x&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-new-column-based-on-values-of-other-columns-and-where-condition">
+<h2>Add new column based on values of other columns and where condition</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;Alex&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Marie&#39;</span><span class="p">,</span> <span class="mi">21</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Tina&#39;</span><span class="p">,</span> <span class="mi">35</span><span class="p">]]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Adult&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;yes&#39;</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Adult&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Adult&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">18</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">)</span>
+
+<span class="c1"># or</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Adult&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">18</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">)</span>
+
+<span class="c1"># results</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+    <span class="n">Name</span>  <span class="n">Age</span> <span class="n">Adult</span>
+<span class="mi">0</span>   <span class="n">Alex</span>   <span class="mi">10</span>    <span class="n">no</span>
+<span class="mi">1</span>    <span class="n">Bob</span>   <span class="mi">12</span>    <span class="n">no</span>
+<span class="mi">2</span>  <span class="n">Marie</span>   <span class="mi">21</span>   <span class="n">yes</span>
+<span class="mi">3</span>   <span class="n">Tina</span>   <span class="mi">35</span>   <span class="n">yes</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="flatten-collapse-the-hierarchical-index-in-columns">
+<h2>Flatten/collapse the hierarchical index in columns</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">col</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="iterate-over-dataframe-rows-slow-operation">
+<h2>Iterate over DataFrame rows (slow operation)</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># pandas vectorized functions should be used instead of rows iteration</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="c1"># row is a Series object</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;column_x&#39;</span><span class="p">])</span>
+
+<span class="c1"># or faster method</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">itertuples</span><span class="p">():</span>
+    <span class="c1"># row is a named tuple with associated column names</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">column_x</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">column_y</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="df_axis.html" class="btn btn-neutral float-right" title="Axis" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../pandas.html" class="btn btn-neutral" title="Pandas snippets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019-24, allthesnippets.com. Last updated 2024-03-12.
+
+    </p>
+  </div>
+    <p style="margin-left: 190px;">
+    	<a href="https://www.allthesnippets.com/updates.html">What was updated?</a>
+    </p>
+     
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-130165634-1"></script>
+        <script type="text/javascript" src="../_static/js/google_analytics_tracker.js"></script>
+        <script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

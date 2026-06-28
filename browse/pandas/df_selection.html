@@ -1,0 +1,687 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta content="Subset pandas DataFrame by index/labels and columns (.loc) or by integer position (.iloc) on index (rows) or columns. Update column values based on rows condition." name="description" />
+<meta content="pandas,iloc,loc,cheat sheet" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pandas snippets and cheat sheet for data selection with .loc &amp; .iloc</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/snippets-style.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Reshape Data" href="df_reshape.html" />
+    <link rel="prev" title="Summarize Data" href="df_summarize.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+Share: <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Pandas%20Snippets%20And%20Cheat%20Sheets%20Collection%20For%20Data%20Science%20https%3A%2F%2Fallthesnippets.com%2Fbrowse%2Findex.html"
+target="_blank">
+	<span class="fa fa-twitter-square fa-2x"></span>
+</a>
+
+ <a href="http://www.facebook.com/sharer.php?u=https://allthesnippets.com/browse/index.html" target="_blank" title="Facebook">
+ 	<span class="fa fa-facebook-square fa-2x"></span>
+ </a>
+
+<a href="http://www.linkedin.com/shareArticle?mini=true&url=https://allthesnippets.com/browse/index.html" target="_blank" title="Likedin">
+	<span class="fa fa-linkedin-square fa-2x"></span>
+</a>
+
+<a href="mailto:?subject=pandas%20cheat%20sheets&body=Pandas%20Snippets%20And%20Cheat%20Sheets%20Collection%20For%20Data%20Science%20https%3A%2F%2Fallthesnippets.com%2Fbrowse%2Findex.html" title="Share by Email" target=_blank>
+    <span class="fa fa-2x fa-envelope-square"></span>
+</a>
+
+<br />
+<a href="http://www.allthesnippets.com" class="icon icon-home">&nbsp;All-The-Snippets Home</a>
+<br />
+
+
+          
+            <a href="../index.html" class="icon icon-home"> Browse Snippets
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">All The Snippets:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../pandas.html">Pandas snippets</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="df_basics.html">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_axis.html">Axis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_examine.html">Examine Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_files.html">Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_tidy.html">Tidy Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_summarize.html">Summarize Data</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Select Data With .loc &amp; .iloc</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#loc-selection-by-index-labels-and-columns">.loc selection by index/labels and columns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loc-select-all-rows-and-some-columns-by-index-labels">.loc select all rows and some columns by index/labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loc-select-some-rows-and-all-columns-by-index-labels">.loc select some rows and all columns by index/labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loc-select-some-rows-and-some-columns-by-index-labels">.loc select some rows and some columns by index/labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#select-rows-whose-column-values-equal-some-value-scalar">Select rows whose column values <cite>equal</cite> some value/scalar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#select-rows-whose-column-values-do-not-equal-some-value-scalar">Select rows whose column values <cite>do not equal</cite> some_value/scalar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#select-rows-whose-column-values-are-in-a-list">Select rows whose column values <cite>are in</cite> a list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#select-rows-whose-column-values-are-not-in-a-list">Select rows whose column values <cite>are not</cite> in a list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#select-rows-that-satisfy-multiple-and-boolean-conditions">Select rows that satisfy multiple <cite>and</cite> (<cite>&amp;</cite>) boolean conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#select-rows-that-satisfy-multiple-or-boolean-conditions">Select rows that satisfy multiple <cite>or</cite> (<cite>|</cite>) boolean conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-column-values-based-on-rows-condition">Update column values based on rows condition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-multiple-columns-values-based-on-rows-condition">Update multiple columns values based on rows condition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loc-selection-for-single-label-all-columns-returns-a-series">.loc selection for single label, all columns / returns a Series</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loc-selection-for-list-of-label-all-columns-returns-a-dataframe">.loc selection for list of label, all columns / returns a DataFrame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loc-selection-for-single-label-single-column-returns-one-value">.loc selection for single label, single column / returns one value</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loc-selection-for-all-label-single-column-returns-a-series">.loc selection for all label, single column / returns a Series</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loc-selection-for-multiple-labels-multiple-columns-returns-a-dataframe">.loc selection for multiple labels, multiple columns / returns a DataFrame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loc-selection-for-slice-of-labels-for-row-all-columns-returns-a-dataframe">.loc selection for slice of labels for row, all columns / returns a DataFrame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loc-selection-for-all-rows-slice-of-columns-returns-a-dataframe">.loc selection for all rows, slice of columns / returns a DataFrame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loc-selection-for-rows-and-columns-with-boolean-conditions">.loc selection for rows and columns with boolean conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#select-rows-1-and-3-and-second-column-with-boolean-conditions">Select rows 1 and 3, and second column with boolean conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#select-rows-whose-column-values-equals-a-scalar">Select rows whose column values equals a scalar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#select-rows-that-satisfy-multiple-boolean-conditions-keep-selected-columns">Select rows that satisfy multiple boolean conditions; keep selected columns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Update column values based on rows condition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Update multiple columns values based on rows condition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iloc-position-based-selection-from-0-to-length-1-of-the-axis">.iloc position based selection (from 0 to length-1 of the axis)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iloc-single-row-selections-all-columns">.iloc single row selections, all columns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iloc-single-column-selections-all-rows">.iloc single column selections, all rows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iloc-multiple-row-and-column-selections">.iloc multiple row and column selections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iloc-selection-for-rows-and-columns-with-boolean-conditions">.iloc selection for rows and columns with boolean conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#select-the-rows-whose-index-label-is-an-even-number">Select the rows whose index label is an even number</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#select-slice-of-rows-with-iloc">Select slice of rows with .iloc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-set-column-values-based-on-rows-condition-with-iloc">Update/set column values based on rows condition with .iloc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="df_reshape.html">Reshape Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_grouping.html">Group Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="df_timeseries.html">Time Series Data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../python.html">Python snippets</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Browse Snippets</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../pandas.html">Pandas snippets</a> &raquo;</li>
+        
+      <li>Pandas snippets and cheat sheet for data selection with .loc &amp; .iloc</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/pandas/df_selection.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div style="margin: auto; text-align: center;">
+  <a class="gumroad-button" href="https://gumroad.com/l/allthesnippets">Get Pandas Snippets and Cheats Collection eBook</a>
+</div><div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="select-data-with-loc-iloc">
+<h1>Select Data With .loc &amp; .iloc</h1>
+<p>The common ways of selecting rows and columns in a pandas DataFrame are the functions <strong>.loc</strong> (<em>label based selection</em>, which means that one needs to specify the name of the rows and columns)
+and <strong>.iloc</strong> (<em>index based selection</em>, which means that one needs to specify rows and columns by their integer index).</p>
+<div class="section" id="loc-selection-by-index-labels-and-columns">
+<h2>.loc selection by index/labels and columns</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">&lt;</span><span class="n">row</span> <span class="n">selection</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">column</span> <span class="n">selection</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="loc-select-all-rows-and-some-columns-by-index-labels">
+<h2>.loc select all rows and some columns by index/labels</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s1">&#39;column1&#39;</span><span class="p">,</span> <span class="s1">&#39;column2&#39;</span><span class="p">,</span> <span class="s1">&#39;column3&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="loc-select-some-rows-and-all-columns-by-index-labels">
+<h2>.loc select some rows and all columns by index/labels</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;row1&#39;</span><span class="p">,</span> <span class="s1">&#39;row2&#39;</span><span class="p">],</span> <span class="p">:]</span>
+<span class="c1"># or ommiting the colon for columns labels</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;row1&#39;</span><span class="p">,</span> <span class="s1">&#39;row2&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="loc-select-some-rows-and-some-columns-by-index-labels">
+<h2>.loc select some rows and some columns by index/labels</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;row1&#39;</span><span class="p">,</span> <span class="s1">&#39;row2&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;column1&#39;</span><span class="p">,</span> <span class="s1">&#39;column2&#39;</span><span class="p">,</span> <span class="s1">&#39;column3&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="select-rows-whose-column-values-equal-some-value-scalar">
+<h2>Select rows whose column values <cite>equal</cite> some value/scalar</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;column_x&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">some_value</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="select-rows-whose-column-values-do-not-equal-some-value-scalar">
+<h2>Select rows whose column values <cite>do not equal</cite> some_value/scalar</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;column_x&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">some_value</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="select-rows-whose-column-values-are-in-a-list">
+<h2>Select rows whose column values <cite>are in</cite> a list</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;column_x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">])]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="select-rows-whose-column-values-are-not-in-a-list">
+<h2>Select rows whose column values <cite>are not</cite> in a list</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;column_x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">])]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="select-rows-that-satisfy-multiple-and-boolean-conditions">
+<h2>Select rows that satisfy multiple <cite>and</cite> (<cite>&amp;</cite>) boolean conditions</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># note the parentheses due to python operators precedence!</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;column_x&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">A</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;column_y&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">B</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="select-rows-that-satisfy-multiple-or-boolean-conditions">
+<h2>Select rows that satisfy multiple <cite>or</cite> (<cite>|</cite>) boolean conditions</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># note the parentheses due to python operators precedence!</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;column_x&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">A</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;column_y&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">B</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="update-column-values-based-on-rows-condition">
+<h2>Update column values based on rows condition</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;column_x&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">A</span><span class="p">,</span> <span class="s1">&#39;column_y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_value</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="update-multiple-columns-values-based-on-rows-condition">
+<h2>Update multiple columns values based on rows condition</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;column_x&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">A</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;column_y&#39;</span><span class="p">,</span> <span class="s1">&#39;column_z&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="n">new_value_y</span><span class="p">,</span> <span class="n">new_value_z</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="loc-selection-for-single-label-all-columns-returns-a-series">
+<h2>.loc selection for single label, all columns / returns a Series</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+     <span class="n">Name</span>  <span class="n">Age</span>
+<span class="n">a</span>    <span class="n">Alex</span>   <span class="mi">10</span>
+<span class="n">b</span>     <span class="n">Bob</span>   <span class="mi">12</span>
+<span class="n">c</span>  <span class="n">Clarke</span>   <span class="mi">13</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+<span class="n">Name</span>    <span class="n">Alex</span>
+<span class="n">Age</span>       <span class="mi">10</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">object</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="loc-selection-for-list-of-label-all-columns-returns-a-dataframe">
+<h2>.loc selection for list of label, all columns / returns a DataFrame</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+     <span class="n">Name</span>  <span class="n">Age</span>
+<span class="n">a</span>    <span class="n">Alex</span>   <span class="mi">10</span>
+<span class="n">b</span>     <span class="n">Bob</span>   <span class="mi">12</span>
+<span class="n">c</span>  <span class="n">Clarke</span>   <span class="mi">13</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]]</span>
+   <span class="n">Name</span>  <span class="n">Age</span>
+<span class="n">a</span>  <span class="n">Alex</span>   <span class="mi">10</span>
+<span class="n">b</span>   <span class="n">Bob</span>   <span class="mi">12</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="loc-selection-for-single-label-single-column-returns-one-value">
+<h2>.loc selection for single label, single column / returns one value</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+     <span class="n">Name</span>  <span class="n">Age</span>
+<span class="n">a</span>    <span class="n">Alex</span>   <span class="mi">10</span>
+<span class="n">b</span>     <span class="n">Bob</span>   <span class="mi">12</span>
+<span class="n">c</span>  <span class="n">Clarke</span>   <span class="mi">13</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">]</span>
+<span class="mi">13</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="loc-selection-for-all-label-single-column-returns-a-series">
+<h2>.loc selection for all label, single column / returns a Series</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+     <span class="n">Name</span>  <span class="n">Age</span>
+<span class="n">a</span>    <span class="n">Alex</span>   <span class="mi">10</span>
+<span class="n">b</span>     <span class="n">Bob</span>   <span class="mi">12</span>
+<span class="n">c</span>  <span class="n">Clarke</span>   <span class="mi">13</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Age&#39;</span><span class="p">]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Age&#39;</span><span class="p">]</span>
+<span class="n">a</span>    <span class="mi">10</span>
+<span class="n">b</span>    <span class="mi">12</span>
+<span class="n">c</span>    <span class="mi">13</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">Age</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="loc-selection-for-multiple-labels-multiple-columns-returns-a-dataframe">
+<h2>.loc selection for multiple labels, multiple columns / returns a DataFrame</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+     <span class="n">Name</span>  <span class="n">Age</span>
+<span class="n">a</span>    <span class="n">Alex</span>   <span class="mi">10</span>
+<span class="n">b</span>     <span class="n">Bob</span>   <span class="mi">12</span>
+<span class="n">c</span>  <span class="n">Clarke</span>   <span class="mi">13</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;Name&#39;</span><span class="p">]]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;Name&#39;</span><span class="p">]]</span>
+   <span class="n">Age</span>    <span class="n">Name</span>
+<span class="n">a</span>   <span class="mi">10</span>    <span class="n">Alex</span>
+<span class="n">c</span>   <span class="mi">13</span>  <span class="n">Clarke</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="loc-selection-for-slice-of-labels-for-row-all-columns-returns-a-dataframe">
+<h2>.loc selection for slice of labels for row, all columns / returns a DataFrame</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+     <span class="n">Name</span>  <span class="n">Age</span>
+<span class="n">a</span>    <span class="n">Alex</span>   <span class="mi">10</span>
+<span class="n">b</span>     <span class="n">Bob</span>   <span class="mi">12</span>
+<span class="n">c</span>  <span class="n">Clarke</span>   <span class="mi">13</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="s1">&#39;c&#39;</span><span class="p">]</span>
+
+<span class="c1"># or</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">]]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="s1">&#39;c&#39;</span><span class="p">]</span>
+     <span class="n">Name</span>  <span class="n">Age</span>
+<span class="n">b</span>     <span class="n">Bob</span>   <span class="mi">12</span>
+<span class="n">c</span>  <span class="n">Clarke</span>   <span class="mi">13</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="loc-selection-for-all-rows-slice-of-columns-returns-a-dataframe">
+<h2>.loc selection for all rows, slice of columns / returns a DataFrame</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+     <span class="n">Name</span>  <span class="n">Age</span> <span class="n">Occupation</span>
+<span class="n">a</span>    <span class="n">Alex</span>   <span class="mi">10</span>   <span class="n">Student</span>
+<span class="n">b</span>     <span class="n">Bob</span>   <span class="mi">12</span>   <span class="n">Teacher</span>
+<span class="n">c</span>  <span class="n">Clarke</span>   <span class="mi">13</span>  <span class="n">Engineer</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Age&#39;</span><span class="p">:</span><span class="s1">&#39;Occupation&#39;</span><span class="p">]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Age&#39;</span><span class="p">:</span><span class="s1">&#39;Occupation&#39;</span><span class="p">]</span>
+   <span class="n">Age</span> <span class="n">Occupation</span>
+<span class="n">a</span>   <span class="mi">10</span>    <span class="n">Student</span>
+<span class="n">b</span>   <span class="mi">12</span>    <span class="n">Teacher</span>
+<span class="n">c</span>   <span class="mi">13</span>   <span class="n">Engineer</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="loc-selection-for-rows-and-columns-with-boolean-conditions">
+<h2>.loc selection for rows and columns with boolean conditions</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># length of boolean arrays must match dataframe size</span>
+<span class="c1"># select rows 1 and 3 and first column</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span> <span class="p">[</span><span class="kc">True</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="select-rows-1-and-3-and-second-column-with-boolean-conditions">
+<h2>Select rows 1 and 3, and second column with boolean conditions</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+     <span class="n">Name</span>  <span class="n">Age</span> <span class="n">Occupation</span>
+<span class="n">a</span>    <span class="n">Alex</span>   <span class="mi">10</span>   <span class="n">Student</span>
+<span class="n">b</span>     <span class="n">Bob</span>   <span class="mi">12</span>   <span class="n">Teacher</span>
+<span class="n">c</span>  <span class="n">Clarke</span>   <span class="mi">13</span>  <span class="n">Engineer</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">]]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">]]</span>
+   <span class="n">Age</span>
+<span class="n">a</span>   <span class="mi">10</span>
+<span class="n">c</span>   <span class="mi">13</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="select-rows-whose-column-values-equals-a-scalar">
+<h2>Select rows whose column values equals a scalar</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+     <span class="n">Name</span>  <span class="n">Age</span> <span class="n">Occupation</span>
+<span class="n">a</span>    <span class="n">Alex</span>   <span class="mi">10</span>   <span class="n">Student</span>
+<span class="n">b</span>     <span class="n">Bob</span>   <span class="mi">12</span>   <span class="n">Teacher</span>
+<span class="n">c</span>  <span class="n">Clarke</span>   <span class="mi">13</span>  <span class="n">Engineer</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Alex&#39;</span><span class="p">]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Alex&#39;</span><span class="p">]</span>
+   <span class="n">Name</span>  <span class="n">Age</span> <span class="n">Occupation</span>
+<span class="n">a</span>  <span class="n">Alex</span>   <span class="mi">10</span>    <span class="n">Student</span>
+
+<span class="c1"># df[&#39;Name&#39;] == &#39;Alex&#39; produces a Pandas Series with a True/False value for every row in the data</span>
+<span class="c1"># where there are &#39;True&#39; values for the rows where the Name is &#39;Alex&#39;.</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Alex&#39;</span>
+<span class="n">a</span>     <span class="kc">True</span>
+<span class="n">b</span>    <span class="kc">False</span>
+<span class="n">c</span>    <span class="kc">False</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">Name</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">bool</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="select-rows-that-satisfy-multiple-boolean-conditions-keep-selected-columns">
+<h2>Select rows that satisfy multiple boolean conditions; keep selected columns</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+     <span class="n">Name</span>  <span class="n">Age</span> <span class="n">Occupation</span>
+<span class="n">a</span>    <span class="n">Alex</span>   <span class="mi">10</span>   <span class="n">Student</span>
+<span class="n">b</span>     <span class="n">Bob</span>   <span class="mi">12</span>   <span class="n">Teacher</span>
+<span class="n">c</span>  <span class="n">Clarke</span>   <span class="mi">13</span>  <span class="n">Engineer</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Alex&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">12</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Occupation&#39;</span><span class="p">]]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Alex&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">12</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Occupation&#39;</span><span class="p">]]</span>
+   <span class="n">Name</span> <span class="n">Occupation</span>
+<span class="n">a</span>  <span class="n">Alex</span>    <span class="n">Student</span>
+<span class="n">b</span>   <span class="n">Bob</span>    <span class="n">Teacher</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>Update column values based on rows condition</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+     <span class="n">Name</span>  <span class="n">Age</span> <span class="n">Occupation</span>
+<span class="n">a</span>    <span class="n">Alex</span>   <span class="mi">10</span>   <span class="n">Student</span>
+<span class="n">b</span>     <span class="n">Bob</span>   <span class="mi">12</span>   <span class="n">Teacher</span>
+<span class="n">c</span>  <span class="n">Clarke</span>   <span class="mi">13</span>  <span class="n">Engineer</span>
+
+<span class="c1"># update Alex Occupation to Grad Student</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Alex&#39;</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;Occupation&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="s1">&#39;Grad Student&#39;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+     <span class="n">Name</span>  <span class="n">Age</span>    <span class="n">Occupation</span>
+<span class="n">a</span>    <span class="n">Alex</span>   <span class="mi">10</span>  <span class="n">Grad</span> <span class="n">Student</span>
+<span class="n">b</span>     <span class="n">Bob</span>   <span class="mi">12</span>       <span class="n">Teacher</span>
+<span class="n">c</span>  <span class="n">Clarke</span>   <span class="mi">13</span>      <span class="n">Engineer</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>Update multiple columns values based on rows condition</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># giving DataFrame df</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+     <span class="n">Name</span>  <span class="n">Age</span> <span class="n">Occupation</span>
+<span class="n">a</span>    <span class="n">Alex</span>   <span class="mi">10</span>   <span class="n">Student</span>
+<span class="n">b</span>     <span class="n">Bob</span>   <span class="mi">12</span>   <span class="n">Teacher</span>
+<span class="n">c</span>  <span class="n">Clarke</span>   <span class="mi">13</span>  <span class="n">Engineer</span>
+
+<span class="c1"># update Alex Age and Occupation to 20 years and Grad Student</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Alex&#39;</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;Occupation&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;Grad Student&#39;</span><span class="p">]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+     <span class="n">Name</span>  <span class="n">Age</span>    <span class="n">Occupation</span>
+<span class="n">a</span>    <span class="n">Alex</span>   <span class="mi">20</span>  <span class="n">Grad</span> <span class="n">Student</span>
+<span class="n">b</span>     <span class="n">Bob</span>   <span class="mi">12</span>       <span class="n">Teacher</span>
+<span class="n">c</span>  <span class="n">Clarke</span>   <span class="mi">13</span>      <span class="n">Engineer</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="iloc-position-based-selection-from-0-to-length-1-of-the-axis">
+<h2>.iloc position based selection (from 0 to length-1 of the axis)</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">&lt;</span><span class="n">row</span> <span class="n">selection</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">column</span> <span class="n">selection</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="iloc-single-row-selections-all-columns">
+<h2>.iloc single row selections, all columns</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># return Series object</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># first row of dataframe</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># second row of dataframe</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># last row of data frame</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="iloc-single-column-selections-all-rows">
+<h2>.iloc single column selections, all rows</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># return Series object</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># first column of dataframe</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># second column of dataframe</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># last column of data frame</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="iloc-multiple-row-and-column-selections">
+<h2>.iloc multiple row and column selections</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># return DataFrame object</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>             <span class="c1"># first three rows of dataframe, all columns</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>          <span class="c1"># first three columns of dataframe, all rows</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>        <span class="c1"># first five rows, column 4th, 5th and 6th of dataframe</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span> <span class="p">[[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span> <span class="c1"># retrieve rows 4th &amp; 5th, columns 2nd &amp; 3rd with lists</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="iloc-selection-for-rows-and-columns-with-boolean-conditions">
+<h2>.iloc selection for rows and columns with boolean conditions</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># length of boolean arrays must match dataframe size</span>
+<span class="c1"># select rows 1 and 3 and first column</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span> <span class="p">[</span><span class="kc">True</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="select-the-rows-whose-index-label-is-an-even-number">
+<h2>Select the rows whose index label is an even number</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">index</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="select-slice-of-rows-with-iloc">
+<h2>Select slice of rows with .iloc</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># start_pos is the index of the first row to retrieve</span>
+<span class="c1"># stop_pos is the index of the row to stop (last row retrieved will have the index of `stop_pos -1`)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">start_pos</span><span class="p">:</span><span class="n">stop_pos</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="update-set-column-values-based-on-rows-condition-with-iloc">
+<h2>Update/set column values based on rows condition with .iloc</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># set column 4 values to `new_value` for first two rows of data frame</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;new_value&#39;</span>
+
+<span class="c1"># set all column values to `new_value` for first two rows of data frame</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;new_value&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="df_reshape.html" class="btn btn-neutral float-right" title="Reshape Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="df_summarize.html" class="btn btn-neutral" title="Summarize Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019-24, allthesnippets.com. Last updated 2024-03-12.
+
+    </p>
+  </div>
+    <p style="margin-left: 190px;">
+    	<a href="https://www.allthesnippets.com/updates.html">What was updated?</a>
+    </p>
+     
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-130165634-1"></script>
+        <script type="text/javascript" src="../_static/js/google_analytics_tracker.js"></script>
+        <script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
