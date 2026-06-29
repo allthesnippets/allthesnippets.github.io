@@ -11,7 +11,7 @@
         var currentLocation = window.location.href;
 
         // Define the base URLs for redirection
-        var baseUrls = ['https://www.allthesnippets.com', 'https://allthesnippets.com'];
+        var baseUrls = ['https://allthesnippets.github.io', 'https://allthesnippets.com'];
 
         // display current url
         document.write(currentLocation)
@@ -33,9 +33,9 @@
         // If the location doesn't match browse or search paths, display a message
         if (!redirectToIndex) {
             document.write('<h1>All-The-Snippets: Page doesn\'t exist.</h1>');
-            document.write('<p>Try main page <a href="' + baseUrls[0] + '">www.allthesnippets.com</a></p>');
-            document.write('<p>Try search page <a href="' + baseUrls[0] + '/search/index.html' + '">www.allthesnippets.com/search/index.html</a></p>');
-            document.write('<p>Try browse page <a href="' + baseUrls[0] + '/browse/index.html' + '">www.allthesnippets.com/browse/index.html</a></p>');
+            document.write('<p>Try main page <a href="' + baseUrls[0] + '">allthesnippets.github.io</a></p>');
+            document.write('<p>Try search page <a href="' + baseUrls[0] + '/search/index.html' + '">allthesnippets.github.io/search/index.html</a></p>');
+            document.write('<p>Try browse page <a href="' + baseUrls[0] + '/browse/index.html' + '">allthesnippets.github.io/browse/index.html</a></p>');
         }
     </script>
 </body>
